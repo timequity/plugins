@@ -9,6 +9,18 @@ description: |
 
 # DevOps Essentials
 
+## Quick Reference
+
+| Topic | Reference |
+|-------|-----------|
+| Docker | [docker.md](references/docker.md) — Best practices, compose, optimization |
+| CI/CD | [ci-cd.md](references/ci-cd.md) — GitHub Actions patterns, deployment strategies |
+
+**Assets (ready to copy):**
+- `assets/Dockerfile.node` — Multi-stage Node.js Dockerfile
+- `assets/Dockerfile.python` — Multi-stage Python Dockerfile
+- `assets/github-actions.yaml` — Complete CI/CD pipeline template
+
 ## Decision Trees
 
 ### Deployment Strategy

@@ -9,6 +9,12 @@ description: |
 
 # Testing Patterns
 
+## Quick Reference
+
+| Topic | Reference |
+|-------|-----------|
+| Mocking | [mocking.md](references/mocking.md) — Python, TypeScript, Rust mocking patterns |
+
 ## Test Pyramid
 
 ```

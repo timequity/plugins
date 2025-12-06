@@ -9,6 +9,12 @@ description: |
 
 # Node.js Backend Stack
 
+## Quick Reference
+
+| Topic | Reference |
+|-------|-----------|
+| Testing | [testing.md](references/testing.md) — Vitest patterns, mocking, API tests |
+
 ## Tooling (2024+)
 
 | Tool | Purpose | Why |

@@ -9,6 +9,12 @@ description: |
 
 # Rust Backend Stack
 
+## Quick Reference
+
+| Topic | Reference |
+|-------|-----------|
+| Testing | [testing.md](references/testing.md) — axum-test, mockall, async tests |
+
 ## Tooling
 
 | Tool | Purpose | Why |

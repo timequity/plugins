@@ -9,6 +9,13 @@ description: |
 
 # React Frontend Stack
 
+## Quick Reference
+
+| Topic | Reference |
+|-------|-----------|
+| Components | [components.md](references/components.md) — Button, Input, Modal, patterns |
+| State | [state.md](references/state.md) — useState, Zustand, Context, URL state |
+
 ## Tooling (2024+)
 
 | Tool | Purpose | Why |
