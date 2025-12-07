@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Systematic debugging framework: root cause investigation, pattern analysis, hypothesis testing, and implementation. Stop thrashing, start fixing.",
   "author": "timequity",
-  "price": 49,
+  "price": 5,
   "category": "development",
   "tags": ["debugging", "testing", "quality", "senior"],
   "skills": [

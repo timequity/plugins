@@ -1,16 +1,29 @@
 {
   "name": "fullstack-developer",
   "version": "1.0.0",
-  "description": "Complete skill set for fullstack developers: backend (Python/Node/Rust), frontend (React), DevOps, testing, and code review",
+  "description": "Complete web development: backend (Python/Node/Rust), frontend (React), DevOps, testing, code review, and systematic debugging.",
+  "author": "timequity",
+  "price": 5,
+  "category": "development",
+  "tags": ["fullstack", "web", "backend", "frontend", "devops"],
   "skills": [
     "./backend-core",
     "./backend-python",
     "./backend-nodejs",
     "./backend-rust",
     "./frontend-react",
+    "./frontend-design",
+    "./theme-factory",
     "./devops",
     "./code-review",
-    "./testing"
+    "./testing",
+    "./test-driven-development",
+    "./systematic-debugging",
+    "./root-cause-tracing",
+    "./verification-before-completion",
+    "./defense-in-depth",
+    "./testing-anti-patterns",
+    "./condition-based-waiting"
   ],
   "agents": [
     "./agents/code-reviewer.md"

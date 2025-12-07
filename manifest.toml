@@ -1,20 +1,38 @@
-# Marketplace Packs Manifest
-# Each pack is a Claude Code plugin that can be purchased
+# Marketplace Plugins Manifest
+# Each plugin is a Claude Code configuration that can be purchased
 
 [[packs]]
 id = "fullstack-developer"
 name = "Full-Stack Developer"
-description = "Complete skill set for fullstack developers: backend (Python/Node/Rust), frontend (React), DevOps, testing, and code review"
-price_usd = 29.0
+description = "Complete web development: backend (Python/Node/Rust), frontend (React), DevOps, testing, code review, and systematic debugging"
+price_usd = 5.0
 
 [[packs]]
 id = "idea-to-mvp"
 name = "Idea to MVP"
-description = "Transform validated ideas into working MVPs with structured workflows, context management, and sprint planning"
-price_usd = 19.0
+description = "Vibe coding: describe your idea, get a deployed MVP. Hidden validation, auto-testing, beautiful UI. No technical jargon."
+price_usd = 5.0
 
 [[packs]]
 id = "debugging-mastery"
 name = "Debugging Mastery"
-description = "Advanced debugging skills: systematic debugging, root cause analysis, defense-in-depth, and postmortem writing"
-price_usd = 19.0
+description = "Stop random fixes. Four-phase framework: root cause investigation, pattern analysis, hypothesis testing, implementation. 95% first-time fix rate."
+price_usd = 5.0
+
+[[packs]]
+id = "data-engineer"
+name = "Data Engineer"
+description = "ETL/ELT pipelines, dbt models, Airflow DAGs, data quality, warehouse optimization, Spark, and data governance."
+price_usd = 5.0
+
+[[packs]]
+id = "mobile-developer"
+name = "Mobile Developer"
+description = "React Native + Expo mastery: cross-platform apps, App Store deployment, offline-first, push notifications, deep linking."
+price_usd = 5.0
+
+[[packs]]
+id = "devops-sre"
+name = "DevOps & SRE"
+description = "Infrastructure as Code with Terraform, Kubernetes ops, monitoring, incident response, CI/CD, cost optimization, and DR planning."
+price_usd = 5.0

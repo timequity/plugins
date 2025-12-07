@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Data engineering mastery: ETL/ELT pipelines, dbt models, Airflow DAGs, data quality, and warehouse optimization.",
   "author": "timequity",
-  "price": 69,
+  "price": 5,
   "category": "data",
   "tags": ["data", "etl", "dbt", "airflow", "analytics"],
   "skills": [

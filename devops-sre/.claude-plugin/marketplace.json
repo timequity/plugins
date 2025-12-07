@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "DevOps and SRE mastery: Terraform, Kubernetes, monitoring, incident response, and cost optimization.",
   "author": "timequity",
-  "price": 69,
+  "price": 5,
   "category": "infrastructure",
   "tags": ["devops", "sre", "terraform", "kubernetes", "monitoring"],
   "skills": [
