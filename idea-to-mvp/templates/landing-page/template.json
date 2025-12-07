@@ -1,0 +1,39 @@
+{
+  "name": "landing-page",
+  "description": "Static marketing site with Astro and Tailwind",
+  "stack": {
+    "framework": "Astro",
+    "styling": "Tailwind CSS",
+    "analytics": "Plausible",
+    "deploy": "Netlify or Vercel"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "tailwindcss": "^4.0.0",
+    "@astrojs/tailwind": "^6.0.0"
+  },
+  "structure": [
+    "src/",
+    "src/pages/",
+    "src/pages/index.astro",
+    "src/components/",
+    "src/layouts/",
+    "public/",
+    "astro.config.mjs"
+  ],
+  "features": {
+    "sections": [
+      "Hero",
+      "Features",
+      "Testimonials",
+      "Pricing",
+      "CTA",
+      "Footer"
+    ],
+    "analytics": "Plausible (privacy-friendly)",
+    "seo": "Meta tags, OpenGraph, sitemap"
+  },
+  "env": [
+    "PUBLIC_PLAUSIBLE_DOMAIN (optional)"
+  ]
+}

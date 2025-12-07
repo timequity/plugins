@@ -1,0 +1,33 @@
+{
+  "name": "idea-to-mvp",
+  "version": "1.0.0",
+  "description": "Vibe coding: from idea to deployed MVP without technical complexity. AI handles stack selection, code generation, testing, and deployment.",
+  "author": "timequity",
+  "skills": [
+    "./skills/brainstorming",
+    "./skills/idea-validation",
+    "./skills/stack-selector",
+    "./skills/ui-generator",
+    "./skills/feature-builder",
+    "./skills/test-driven-development",
+    "./skills/auto-testing",
+    "./skills/security-check",
+    "./skills/code-review-auto",
+    "./skills/frontend-design",
+    "./skills/theme-factory",
+    "./skills/db-designer",
+    "./skills/api-generator",
+    "./skills/deploy-automation"
+  ],
+  "commands": [
+    "./commands/brainstorm.md",
+    "./commands/idea.md",
+    "./commands/build.md",
+    "./commands/add.md",
+    "./commands/preview.md",
+    "./commands/deploy.md"
+  ],
+  "agents": [
+    "./agents/vibe-coder.md"
+  ]
+}

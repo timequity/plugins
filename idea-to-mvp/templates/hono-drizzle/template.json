@@ -1,0 +1,46 @@
+{
+  "name": "hono-drizzle",
+  "description": "Edge-first API with Hono, Drizzle ORM, and Cloudflare",
+  "stack": {
+    "framework": "Hono",
+    "runtime": "Cloudflare Workers",
+    "database": "D1 (SQLite) or PostgreSQL",
+    "orm": "Drizzle",
+    "validation": "Zod",
+    "deploy": "Cloudflare Workers"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "drizzle-orm": "^0.38.0",
+    "drizzle-kit": "^0.30.0",
+    "zod": "^3.0.0",
+    "@hono/zod-validator": "^0.4.0",
+    "wrangler": "^3.0.0"
+  },
+  "structure": [
+    "src/",
+    "src/index.ts",
+    "src/routes/",
+    "src/db/",
+    "src/db/schema.ts",
+    "drizzle/",
+    "wrangler.toml"
+  ],
+  "features": {
+    "auth": {
+      "method": "JWT or Cloudflare Access"
+    },
+    "database": {
+      "orm": "Drizzle",
+      "options": ["D1", "PostgreSQL", "Turso"]
+    },
+    "api": {
+      "type": "REST",
+      "validation": "Zod"
+    }
+  },
+  "env": [
+    "DATABASE_URL (if PostgreSQL)",
+    "JWT_SECRET"
+  ]
+}

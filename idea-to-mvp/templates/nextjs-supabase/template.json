@@ -1,0 +1,48 @@
+{
+  "name": "nextjs-supabase",
+  "description": "Full-stack web app with Next.js 15, Supabase, and Tailwind",
+  "stack": {
+    "frontend": "Next.js 15 (App Router)",
+    "backend": "Next.js API Routes",
+    "database": "Supabase (PostgreSQL)",
+    "auth": "Supabase Auth",
+    "styling": "Tailwind CSS + shadcn/ui",
+    "deploy": "Vercel"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "@supabase/supabase-js": "^2.0.0",
+    "@supabase/ssr": "^0.5.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "structure": [
+    "app/",
+    "app/layout.tsx",
+    "app/page.tsx",
+    "app/api/",
+    "components/",
+    "lib/supabase/",
+    "public/",
+    "tailwind.config.ts"
+  ],
+  "features": {
+    "auth": {
+      "provider": "Supabase",
+      "methods": ["email", "google", "github"]
+    },
+    "database": {
+      "orm": "Supabase client",
+      "migrations": "Supabase migrations"
+    },
+    "api": {
+      "type": "Next.js Route Handlers",
+      "validation": "Zod"
+    }
+  },
+  "env": [
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY"
+  ]
+}

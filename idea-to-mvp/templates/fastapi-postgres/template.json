@@ -1,0 +1,54 @@
+{
+  "name": "fastapi-postgres",
+  "description": "Python backend with FastAPI, PostgreSQL, and SQLAlchemy",
+  "stack": {
+    "framework": "FastAPI",
+    "database": "PostgreSQL",
+    "orm": "SQLAlchemy 2.0",
+    "validation": "Pydantic v2",
+    "migrations": "Alembic",
+    "deploy": "Fly.io (Docker)"
+  },
+  "dependencies": {
+    "fastapi": "^0.115.0",
+    "uvicorn": "^0.32.0",
+    "sqlalchemy": "^2.0.0",
+    "pydantic": "^2.0.0",
+    "alembic": "^1.14.0",
+    "asyncpg": "^0.30.0",
+    "python-jose": "^3.3.0",
+    "passlib": "^1.7.0"
+  },
+  "structure": [
+    "app/",
+    "app/main.py",
+    "app/api/",
+    "app/models/",
+    "app/schemas/",
+    "app/crud/",
+    "app/core/",
+    "alembic/",
+    "Dockerfile",
+    "requirements.txt"
+  ],
+  "features": {
+    "auth": {
+      "method": "JWT",
+      "hashing": "bcrypt"
+    },
+    "database": {
+      "orm": "SQLAlchemy 2.0 async",
+      "migrations": "Alembic"
+    },
+    "api": {
+      "docs": "OpenAPI (auto)",
+      "validation": "Pydantic"
+    }
+  },
+  "env": [
+    "DATABASE_URL",
+    "SECRET_KEY",
+    "ALGORITHM=HS256",
+    "ACCESS_TOKEN_EXPIRE_MINUTES=30"
+  ]
+}
