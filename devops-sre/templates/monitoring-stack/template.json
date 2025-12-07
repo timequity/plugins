@@ -1,0 +1,25 @@
+{
+  "name": "monitoring-stack",
+  "description": "Prometheus + Grafana observability stack",
+  "stack": {
+    "metrics": "Prometheus",
+    "visualization": "Grafana",
+    "alerting": "Alertmanager"
+  },
+  "structure": [
+    "prometheus/",
+    "prometheus/prometheus.yml",
+    "prometheus/rules/",
+    "grafana/",
+    "grafana/dashboards/",
+    "grafana/provisioning/",
+    "alertmanager/",
+    "alertmanager/alertmanager.yml",
+    "docker-compose.yml"
+  ],
+  "features": {
+    "metrics": "Service discovery, scrape configs",
+    "dashboards": "RED metrics, USE metrics, SLO tracking",
+    "alerts": "High latency, error rate, resource usage"
+  }
+}

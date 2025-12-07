@@ -1,0 +1,30 @@
+{
+  "name": "data-engineer",
+  "version": "1.0.0",
+  "description": "Data engineering mastery: ETL/ELT pipelines, dbt models, Airflow DAGs, data quality, and warehouse optimization.",
+  "author": "timequity",
+  "price": 69,
+  "category": "data",
+  "tags": ["data", "etl", "dbt", "airflow", "analytics"],
+  "skills": [
+    "./skills/pipeline-design",
+    "./skills/dbt-expert",
+    "./skills/airflow-workflows",
+    "./skills/data-modeling",
+    "./skills/data-quality",
+    "./skills/warehouse-optimization",
+    "./skills/spark-basics",
+    "./skills/data-governance"
+  ],
+  "commands": [
+    "./commands/pipeline.md",
+    "./commands/model.md",
+    "./commands/quality.md",
+    "./commands/dag.md"
+  ],
+  "templates": [
+    "./templates/dbt-starter",
+    "./templates/airflow-etl",
+    "./templates/spark-job"
+  ]
+}

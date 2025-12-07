@@ -1,0 +1,20 @@
+# Marketplace Packs Manifest
+# Each pack is a Claude Code plugin that can be purchased
+
+[[packs]]
+id = "fullstack-developer"
+name = "Full-Stack Developer"
+description = "Complete skill set for fullstack developers: backend (Python/Node/Rust), frontend (React), DevOps, testing, and code review"
+price_usd = 29.0
+
+[[packs]]
+id = "idea-to-mvp"
+name = "Idea to MVP"
+description = "Transform validated ideas into working MVPs with structured workflows, context management, and sprint planning"
+price_usd = 19.0
+
+[[packs]]
+id = "debugging-mastery"
+name = "Debugging Mastery"
+description = "Advanced debugging skills: systematic debugging, root cause analysis, defense-in-depth, and postmortem writing"
+price_usd = 19.0

@@ -1,0 +1,24 @@
+{
+  "name": "debugging-mastery",
+  "version": "1.0.0",
+  "description": "Systematic debugging framework: root cause investigation, pattern analysis, hypothesis testing, and implementation. Stop thrashing, start fixing.",
+  "author": "timequity",
+  "price": 49,
+  "category": "development",
+  "tags": ["debugging", "testing", "quality", "senior"],
+  "skills": [
+    "./skills/systematic-debugging",
+    "./skills/root-cause-tracing",
+    "./skills/defense-in-depth",
+    "./skills/condition-based-waiting",
+    "./skills/testing-anti-patterns",
+    "./skills/performance-profiling",
+    "./skills/postmortem-writing"
+  ],
+  "commands": [
+    "./commands/investigate.md",
+    "./commands/trace.md",
+    "./commands/flaky.md",
+    "./commands/postmortem.md"
+  ]
+}

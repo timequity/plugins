@@ -1,0 +1,29 @@
+{
+  "name": "airflow-etl",
+  "description": "Airflow DAGs for ETL pipelines with best practices",
+  "stack": {
+    "orchestrator": "Apache Airflow",
+    "version": "2.x",
+    "executor": "Celery / Kubernetes"
+  },
+  "dependencies": {
+    "apache-airflow": "^2.8.0",
+    "apache-airflow-providers-common-sql": "^1.0.0",
+    "apache-airflow-providers-amazon": "^8.0.0"
+  },
+  "structure": [
+    "dags/",
+    "dags/common/",
+    "dags/etl/",
+    "plugins/",
+    "tests/",
+    "config/",
+    "docker-compose.yml",
+    "Dockerfile"
+  ],
+  "features": {
+    "patterns": ["Daily ETL", "Incremental loads", "Full refreshes"],
+    "operators": ["Python", "SQL", "S3", "dbt"],
+    "monitoring": "Slack alerts, SLA tracking"
+  }
+}

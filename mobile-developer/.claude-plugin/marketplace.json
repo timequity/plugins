@@ -1,0 +1,28 @@
+{
+  "name": "mobile-developer",
+  "version": "1.0.0",
+  "description": "React Native and Expo mastery: cross-platform apps, app store deployment, offline-first, push notifications.",
+  "author": "timequity",
+  "price": 59,
+  "category": "mobile",
+  "tags": ["mobile", "react-native", "expo", "ios", "android"],
+  "skills": [
+    "./skills/react-native-expert",
+    "./skills/expo-workflows",
+    "./skills/mobile-ui",
+    "./skills/app-store-deploy",
+    "./skills/offline-first",
+    "./skills/push-notifications",
+    "./skills/deep-linking"
+  ],
+  "commands": [
+    "./commands/create.md",
+    "./commands/screen.md",
+    "./commands/deploy.md",
+    "./commands/test.md"
+  ],
+  "templates": [
+    "./templates/expo-typescript",
+    "./templates/mobile-saas"
+  ]
+}
