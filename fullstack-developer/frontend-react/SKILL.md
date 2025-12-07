@@ -9,6 +9,8 @@ description: |
 
 # React Frontend Stack
 
+> **Live docs:** Add `use context7` to prompt for up-to-date React, TanStack Query, Tailwind documentation.
+
 ## Quick Reference
 
 | Topic | Reference |
@@ -16,17 +18,21 @@ description: |
 | Components | [components.md](references/components.md) — Button, Input, Modal, patterns |
 | State | [state.md](references/state.md) — useState, Zustand, Context, URL state |
 
-## Tooling (2024+)
+## Tooling (2025)
 
 | Tool | Purpose | Why |
 |------|---------|-----|
 | **Vite** | Build tool | Fast HMR, ESM native |
 | **React 19** | UI library | RSC, Actions, use() |
 | **TypeScript** | Type safety | Strict mode |
-| **Tailwind v4** | Styling | Utility-first, fast |
+| **Tailwind v4** | Styling | Utility-first, Vite plugin |
 | **TanStack Query** | Data fetching | Caching, mutations |
 | **Zustand** | State | Simple, no boilerplate |
 | **React Router 7** | Routing | Data loading, actions |
+
+**Notes:**
+- Tailwind v4: new config via Vite plugin, no `tailwind.config.js`
+- TanStack Router may require React 18.3.1 (use `--legacy-peer-deps` if needed)
 
 ## Project Setup
 

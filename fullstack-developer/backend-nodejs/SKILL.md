@@ -9,13 +9,15 @@ description: |
 
 # Node.js Backend Stack
 
+> **Live docs:** Add `use context7` to prompt for up-to-date Hono, Drizzle, Zod documentation.
+
 ## Quick Reference
 
 | Topic | Reference |
 |-------|-----------|
 | Testing | [testing.md](references/testing.md) — Vitest patterns, mocking, API tests |
 
-## Tooling (2024+)
+## Tooling (2025)
 
 | Tool | Purpose | Why |
 |------|---------|-----|

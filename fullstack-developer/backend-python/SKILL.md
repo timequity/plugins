@@ -9,7 +9,9 @@ description: |
 
 # Python Backend Stack
 
-## Tooling (2024+)
+> **Live docs:** Add `use context7` to prompt for up-to-date FastAPI, SQLAlchemy, Pydantic documentation.
+
+## Tooling (2025)
 
 | Tool | Purpose | Why |
 |------|---------|-----|

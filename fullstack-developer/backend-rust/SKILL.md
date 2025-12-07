@@ -9,6 +9,8 @@ description: |
 
 # Rust Backend Stack
 
+> **Note:** Axum documentation not yet in Context7. Use official docs at docs.rs/axum.
+
 ## Quick Reference
 
 | Topic | Reference |
