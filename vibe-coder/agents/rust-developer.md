@@ -32,18 +32,20 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
    Run: Task[rust-project-init] first.
    ```
 1. **Verify RED**: Run the specified test, confirm it fails
-2. **Analyze test**: Understand what behavior is expected
-3. **Load skill**: Read backend-rust SKILL.md for patterns
-4. **Add dependencies** (if needed):
+2. **Read docs/features.md** (if exists): understand feature context
+3. **Analyze test**: Understand what behavior is expected
+4. **Load skill**: Read backend-rust SKILL.md for patterns
+5. **Add dependencies** (if needed):
    ```bash
    cargo search {crate} --limit 1
    ```
    - For docs/examples: use Context7 if configured (optional)
    - NEVER hardcode versions without checking
-5. **Implement minimal**: Write ONLY enough code to pass the test
-6. **Verify GREEN**: Run test, confirm it passes
-7. **Run full suite**: Ensure no regressions
-8. **Self-review**: Check implementation against review checklist:
+6. **Implement minimal**: Write ONLY enough code to pass the test
+7. **Verify GREEN**: Run test, confirm it passes
+8. **Run full suite**: Ensure no regressions
+9. **Update docs/features.md** (if exists): set feature status to `done`
+10. **Self-review**: Check implementation against review checklist:
    - [ ] Logic correct? Edge cases?
    - [ ] Security? (no injection, no hardcoded secrets)
    - [ ] Error handling? (no unwrap in handlers)

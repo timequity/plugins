@@ -19,6 +19,18 @@ Sets up a new Rust project with protection and dependencies. Run ONCE.
 - Project type: `api` (Axum), `cli`, `lib`
 - Database: `postgres`, `sqlite`, `none`
 
+## Pre-check: Read docs/ if exists
+
+Before creating anything, check for existing requirements:
+```bash
+ls docs/PRD.md docs/features.md 2>/dev/null
+```
+
+If found:
+1. **Read docs/PRD.md** — understand project purpose
+2. **Read docs/features.md** — know what features are planned
+3. **Use this context** when setting up Cargo.toml dependencies
+
 ## Process
 
 1. **Create project** (if not exists):

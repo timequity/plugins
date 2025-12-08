@@ -31,11 +31,13 @@ Writes minimal failing tests. Never writes implementation code.
    ERROR: Project not initialized.
    Run: Task[rust-project-init] first.
    ```
-1. **Analyze project**: Read existing tests, understand structure
-2. **Design test**: One behavior, clear name, minimal assertions
-3. **Write test**: Create test file or add to existing
-4. **Verify RED**: Run test, confirm it fails for the right reason
-5. **Return**: Test path + expected failure message
+1. **Read docs/features.md** (if exists): understand feature context
+2. **Analyze project**: Read existing tests, understand structure
+3. **Design test**: One behavior, clear name, minimal assertions
+4. **Write test**: Create test file or add to existing
+5. **Verify RED**: Run test, confirm it fails for the right reason
+6. **Update docs/features.md** (if exists): set feature status to `in-progress`
+7. **Return**: Test path + expected failure message
 
 ## Output Format (keep brief!)
 
