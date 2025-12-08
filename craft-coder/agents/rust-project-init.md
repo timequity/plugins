@@ -1,9 +1,9 @@
 ---
 name: rust-project-init
 description: |
-  Initializes Rust project with protection and base dependencies.
-  Run ONCE at project start before any TDD cycles.
-  Creates: .gitignore, .pre-commit-config.yaml, Cargo.toml with deps.
+  Initializes Rust project with protection and dependencies.
+  Creates: .gitignore, .pre-commit-config.yaml, Cargo.toml, empty src/lib.rs stub.
+  Does NOT create tests or routes — only scaffolding.
 tools: Bash, Read, Write
 model: opus
 skills: backend-rust
@@ -104,36 +104,22 @@ Sets up a new Rust project with protection and dependencies. Run ONCE.
    pre-commit run --all-files
    ```
 
-## Output Format
+## Output Format (keep brief!)
 
 ```
-## Project Initialized
+## Initialized: /path/to/project
 
-**Path**: /path/to/project
-**Type**: api (Axum)
+Protection: .gitignore ✓, pre-commit ✓
+Deps: axum 0.8, tokio 1, serde 1, axum-test 18
+Verify: cargo check ✓
 
-### Protection
-- [x] .gitignore (target/, secrets)
-- [x] .pre-commit-config.yaml
-- [x] pre-commit installed
-
-### Dependencies (via Context7)
-- axum = "0.8.1"
-- tokio = "1.43"
-- serde = "1.0"
-- axum-test = "18.1" (dev)
-
-### Verification
-- cargo check: PASS
-- pre-commit: PASS
-
-## Ready for TDD
-Run: Task[tdd-test-writer] to start RED phase
+Ready: Task[tdd-test-writer]
 ```
 
 ## Rules
 
 - Run ONCE per project
-- Use `cargo search` for versions (fast, reliable, no API key)
-- Context7 optional — for docs/examples only
-- Create .env.example if project needs env vars
+- **NEVER create tests** — that's tdd-test-writer's job
+- **NEVER create routes** — only empty Router stub
+- Use `cargo search` for versions
+- Keep output minimal — no code samples in response

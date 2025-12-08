@@ -49,35 +49,19 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
    - [ ] Error handling? (no unwrap in handlers)
    - [ ] Follows patterns from skill?
 
-## Output Format
+## Output Format (keep brief!)
 
 ```
-## TDD Cycle Complete
+## GREEN: test_name
 
-### RED (verified)
-Test: test_name
-Failure: expected X, got Y
+File: path/to/file.rs
+Review: logic ✓, security ✓, errors ✓
+Tests: X passed, lint ✓
 
-### GREEN (verified)
-Implementation: path/to/file.rs
-
-### Files Changed
-- path/to/file.rs — description
-
-### Self-Review
-- [ ] Logic: OK
-- [ ] Security: OK
-- [ ] Errors: OK
-- [ ] Patterns: OK
-
-### Validation
-- target test: PASS
-- full suite: X passed
-- lint: PASS
-
-### Next
-Ready for next test or REFACTOR phase
+Ready: next test or Task[rust-code-reviewer]
 ```
+
+**No code samples in output** — file already written, don't repeat it.
 
 ## Rules
 

@@ -37,32 +37,18 @@ Writes minimal failing tests. Never writes implementation code.
 4. **Verify RED**: Run test, confirm it fails for the right reason
 5. **Return**: Test path + expected failure message
 
-## Output Format
+## Output Format (keep brief!)
 
 ```
-## Test Created
+## RED: test_name
 
-**File**: path/to/test.rs
-**Test name**: test_feature_behavior
+File: path/to/test.rs
+Failure: expected 200, got 404
 
-## Expected Failure
-
-```
-assertion failed: expected X, got Y
+Ready: Task[rust-developer] test_name
 ```
 
-## Verification
-
-```bash
-cargo test test_feature_behavior
-```
-
-## Ready for Implementation
-
-Pass to rust-developer:
-- Test file: path/to/test.rs
-- Test name: test_feature_behavior
-```
+**No code samples in output** — file already written, don't repeat it.
 
 ## Rules
 
