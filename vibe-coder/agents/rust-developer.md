@@ -22,12 +22,25 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 
 ## Process
 
-0. **Check protection**: Verify `.gitignore` has `target/` and `.pre-commit-config.yaml` exists
-   - If missing: run setup from backend-rust skill FIRST section
+0. **Verify protection** (check only, don't create!):
+   ```bash
+   grep -q "target/" .gitignore && test -f .pre-commit-config.yaml
+   ```
+   - If missing → **STOP** with error:
+   ```
+   ERROR: Project not initialized.
+   Run: Task[rust-project-init] first.
+   ```
 1. **Verify RED**: Run the specified test, confirm it fails
 2. **Analyze test**: Understand what behavior is expected
 3. **Load skill**: Read backend-rust SKILL.md for patterns
-4. **Check versions**: Use Context7 or `cargo search` for dependencies
+4. **Add dependencies** (if needed):
+   - **MANDATORY**: Use Context7 first:
+     ```
+     mcp__context7__resolve-library-id → mcp__context7__get-library-docs
+     ```
+   - Fallback (if Context7 unavailable): `cargo search {crate} --limit 1`
+   - NEVER hardcode versions without checking
 5. **Implement minimal**: Write ONLY enough code to pass the test
 6. **Verify GREEN**: Run test, confirm it passes
 7. **Run full suite**: Ensure no regressions
