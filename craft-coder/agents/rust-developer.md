@@ -6,7 +6,7 @@ description: |
   Returns: minimal implementation that passes the test.
   Triggers: "implement", "make test pass", "green phase", "rust implement".
 tools: Bash, Glob, Grep, Read, Edit, Write
-model: sonnet
+model: opus
 skills: backend-rust, test-driven-development
 ---
 

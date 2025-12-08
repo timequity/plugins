@@ -1,48 +1,44 @@
-use axum::{routing::get, Router, Json, http::StatusCode};
+use axum::{http::StatusCode, routing::get, Json, Router};
 use serde::{Deserialize, Serialize};
-use uuid::Uuid;
-use chrono::{DateTime, Utc};
 
 #[derive(Serialize)]
-pub struct NotesResponse {
-    pub data: Vec<()>,
-    pub total: u32,
-}
-
-#[derive(Serialize)]
-pub struct Note {
-    pub id: Uuid,
-    pub title: String,
-    pub content: String,
-    pub created_at: DateTime<Utc>,
+struct NotesResponse {
+    data: Vec<()>,
+    total: u32,
 }
 
 #[derive(Deserialize)]
-pub struct CreateNoteRequest {
-    pub title: String,
-    pub content: String,
+struct CreateNoteRequest {
+    title: String,
+    content: String,
 }
 
-pub async fn get_notes() -> Json<NotesResponse> {
+#[derive(Serialize)]
+struct NoteResponse {
+    id: u64,
+    title: String,
+    content: String,
+    created_at: String,
+}
+
+async fn get_notes() -> Json<NotesResponse> {
     Json(NotesResponse {
         data: vec![],
         total: 0,
     })
 }
 
-pub async fn create_note(
-    Json(payload): Json<CreateNoteRequest>,
-) -> (StatusCode, Json<Note>) {
-    let note = Note {
-        id: Uuid::new_v4(),
+async fn create_note(Json(payload): Json<CreateNoteRequest>) -> (StatusCode, Json<NoteResponse>) {
+    let note = NoteResponse {
+        id: 1,
         title: payload.title,
         content: payload.content,
-        created_at: Utc::now(),
+        created_at: "2025-01-01T00:00:00Z".to_string(),
     };
-
     (StatusCode::CREATED, Json(note))
 }
 
+/// Create the application router.
 pub fn create_app() -> Router {
     Router::new()
         .route("/health", get(|| async { "OK" }))

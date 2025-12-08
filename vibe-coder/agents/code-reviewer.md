@@ -9,7 +9,7 @@ tools:
   - Glob
   - Grep
   - Read
-model: sonnet
+model: opus
 ---
 
 # Code Review Agent

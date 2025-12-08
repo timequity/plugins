@@ -6,7 +6,7 @@ description: |
   Returns: test file path and expected failure message.
   Triggers: "write test for", "tdd test", "failing test", "red phase".
 tools: Bash, Glob, Grep, Read, Edit, Write
-model: sonnet
+model: opus
 skills: test-driven-development, backend-rust
 ---
 
@@ -66,3 +66,23 @@ Pass to rust-developer:
 - Use real assertions, not `todo!()` or `unimplemented!()`
 - Follow project's existing test patterns
 - Check crate versions via Context7 for test dependencies
+
+## Stubs Policy
+
+Create minimal stubs ONLY for test compilation:
+
+```rust
+// OK: empty stub - test will fail with 404
+pub fn create_app() -> Router { Router::new() }
+
+// OK: empty struct for type checking
+pub struct User { pub id: i32 }
+
+// NOT OK: actual implementation
+pub fn create_app() -> Router {
+    Router::new().route("/health", get(|| async { "OK" }))  // ← implements feature!
+}
+```
+
+**Stub = scaffolding for compilation, NOT implementation.**
+Test must fail because feature is missing, not because code doesn't compile.
