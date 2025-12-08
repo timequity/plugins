@@ -1,21 +1,34 @@
 ---
 name: backend-rust
 description: |
-  Modern Rust backend stack: Axum, SQLx, tokio, serde.
-  Use when: building Rust web APIs, high-performance services, or CLI tools.
-  Triggers: "axum", "rust backend", "rust api", "sqlx", "tokio",
-  "actix", "rust web", "shuttle", "cargo".
+  Modern Rust backend with Axum, SQLx, tokio + CI/CD automation.
+  Use when: building Rust APIs, high-performance services, or needing build/test/lint/audit automation.
+  Triggers: "axum", "rust backend", "rust api", "sqlx", "tokio", "cargo build",
+  "cargo test", "clippy", "rustfmt", "cargo-audit", "cross-compile", "rust ci",
+  "release build", "rust security", "shuttle", "actix".
 ---
 
 # Rust Backend Stack
-
-> **Note:** Axum documentation not yet in Context7. Use official docs at docs.rs/axum.
 
 ## Quick Reference
 
 | Topic | Reference |
 |-------|-----------|
 | Testing | [testing.md](references/testing.md) — axum-test, mockall, async tests |
+| CI/CD | [ci-cd.md](references/ci-cd.md) — GitHub Actions, Docker, caching |
+| Cross-Compile | [cross-compile.md](references/cross-compile.md) — targets, musl, static binaries |
+
+## Automation Scripts
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `build.py` | Build debug/release | `python scripts/build.py --release` |
+| `test.py` | Run tests + coverage | `python scripts/test.py --coverage` |
+| `lint.py` | Format + clippy | `python scripts/lint.py --fix` |
+| `audit.py` | Security audit | `python scripts/audit.py` |
+| `check.py` | Full CI check | `python scripts/check.py` |
+
+Scripts auto-detect `Cargo.toml`. Use `--path` to specify location.
 
 ## Tooling
 
@@ -365,6 +378,35 @@ let protected = Router::new()
     .route("/me", get(get_current_user))
     .layer(axum::middleware::from_fn(auth_middleware));
 ```
+
+## Build & CI Workflow
+
+Full CI check before commits:
+
+```bash
+python scripts/check.py
+```
+
+Individual steps:
+
+```bash
+# Format and lint (auto-fix)
+python scripts/lint.py --fix
+
+# Run tests
+python scripts/test.py
+
+# Security audit
+python scripts/audit.py
+
+# Release build
+python scripts/build.py --release
+
+# Cross-compile for Linux (static binary)
+python scripts/build.py --release --target x86_64-unknown-linux-musl
+```
+
+For CI/CD pipelines and cross-compilation setup, see [ci-cd.md](references/ci-cd.md).
 
 ## Anti-patterns
 
