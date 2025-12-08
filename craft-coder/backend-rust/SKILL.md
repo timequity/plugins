@@ -41,6 +41,14 @@ Scripts auto-detect `Cargo.toml`. Use `--path` to specify location.
 | **tracing** | Logging | Structured, async-aware |
 | **Shuttle** | Deploy | Free tier, simple |
 
+## Dependencies
+
+**CRITICAL**: Always use Context7 to check latest crate versions before adding dependencies:
+```
+mcp__context7__resolve-library-id → mcp__context7__get-library-docs
+```
+Versions in this skill are examples — verify current versions via Context7 or crates.io.
+
 ## Project Setup
 
 ```bash
@@ -53,10 +61,10 @@ cd my-api
 [package]
 name = "my-api"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-axum = "0.7"
+axum = "0.8"
 tokio = { version = "1", features = ["full"] }
 sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid", "chrono"] }
 serde = { version = "1", features = ["derive"] }
@@ -407,6 +415,35 @@ python scripts/build.py --release --target x86_64-unknown-linux-musl
 ```
 
 For CI/CD pipelines and cross-compilation setup, see [ci-cd.md](references/ci-cd.md).
+
+## TDD Workflow
+
+Use agents for Test-Driven Development:
+
+```
+1. tdd-test-writer → writes failing test (RED)
+2. Verify: cargo test → see failure
+3. rust-developer → implements minimal code (GREEN)
+4. Verify: cargo test → see pass
+5. Repeat
+```
+
+**Enable TDD enforcement hook** (blocks implementation without failing test):
+
+```json
+// .claude/settings.json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Task",
+      "hooks": [{
+        "type": "command",
+        "command": "python3 scripts/tdd_gate.py"
+      }]
+    }]
+  }
+}
+```
 
 ## Anti-patterns
 
