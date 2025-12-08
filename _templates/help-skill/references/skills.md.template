@@ -1,0 +1,51 @@
+# {{PLUGIN_NAME}} Skills
+
+Detailed documentation for all skills.
+
+{{SKILLS_DETAILED}}
+
+---
+
+## Using Skills
+
+### Automatic activation
+Skills activate when you mention related keywords:
+```
+You: "review this code"
+→ Activates: code-review skill
+```
+
+### Explicit invocation
+```
+You: "use the [skill-name] skill"
+```
+
+### Checking available skills
+```
+You: "what skills do you have?"
+You: "list skills for backend development"
+```
+
+## Skill Locations
+
+Skills are loaded from:
+1. This plugin's `skills/` directory
+2. Your project's `.claude/skills/`
+3. Other installed plugins
+
+## Creating Custom Skills
+
+Add to `.claude/skills/[skill-name]/SKILL.md`:
+
+```markdown
+---
+name: my-skill
+description: |
+  What this skill does.
+  Use when: [trigger conditions]
+---
+
+# My Skill
+
+Instructions for Claude when this skill is active.
+```

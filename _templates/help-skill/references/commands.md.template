@@ -1,0 +1,35 @@
+# {{PLUGIN_NAME}} Commands
+
+Complete command reference.
+
+## Command List
+
+| Command | Description |
+|---------|-------------|
+{{COMMANDS_LIST}}
+
+## Usage
+
+Commands follow the pattern: `/{{PLUGIN_PREFIX}}:command`
+
+### With arguments
+Some commands accept arguments:
+```
+/{{PLUGIN_PREFIX}}:command argument
+/{{PLUGIN_PREFIX}}:command "argument with spaces"
+```
+
+### Examples
+{{COMMAND_EXAMPLES}}
+
+## Creating Custom Commands
+
+Add `.md` files to `.claude/commands/`:
+
+```
+.claude/
+└── commands/
+    └── my-command.md
+```
+
+The filename becomes the command: `my-command.md` → `/my-command`

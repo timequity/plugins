@@ -1,0 +1,41 @@
+# Multi-stage Dockerfile for Python (FastAPI + uv)
+# Usage: docker build -t myapp .
+
+# Build stage
+FROM python:3.12-slim AS builder
+WORKDIR /app
+
+# Install uv
+RUN pip install uv
+
+# Copy dependency files
+COPY pyproject.toml uv.lock ./
+
+# Install dependencies
+RUN uv sync --frozen --no-dev
+
+# Copy source
+COPY src ./src
+
+# Production stage
+FROM python:3.12-slim AS runner
+WORKDIR /app
+
+# Create non-root user
+RUN useradd -m -u 1001 appuser
+
+# Copy virtual environment and source
+COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
+COPY --from=builder --chown=appuser:appuser /app/src ./src
+
+# Set PATH to use venv
+ENV PATH="/app/.venv/bin:$PATH"
+
+USER appuser
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
+
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

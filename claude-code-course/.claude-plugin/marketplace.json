@@ -1,0 +1,15 @@
+{
+  "name": "claude-code-course",
+  "version": "1.0.0",
+  "description": "Master Claude Code from zero to expert. Socratic assessment places you at the right level. Progressive skills from basics to advanced workflows.",
+  "author": "timequity",
+  "price": 0,
+  "category": "education",
+  "tags": ["learning", "claude-code", "tutorial", "beginner", "course"],
+  "skills": [
+    "./skills/learning-path",
+    "./skills/foundations",
+    "./skills/intermediate",
+    "./skills/advanced"
+  ]
+}
