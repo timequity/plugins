@@ -1,5 +1,5 @@
 ---
-name: testing
+name: testing-core
 description: |
   Cross-language testing patterns: unit, integration, E2E testing strategies.
   Use when: writing tests, setting up test infrastructure, or improving coverage.
@@ -7,7 +7,7 @@ description: |
   "coverage", "mock", "fixture".
 ---
 
-# Testing Patterns
+# Testing Core
 
 ## Quick Reference
 
