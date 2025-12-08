@@ -31,6 +31,11 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 5. **Implement minimal**: Write ONLY enough code to pass the test
 6. **Verify GREEN**: Run test, confirm it passes
 7. **Run full suite**: Ensure no regressions
+8. **Self-review**: Check implementation against review checklist:
+   - [ ] Logic correct? Edge cases?
+   - [ ] Security? (no injection, no hardcoded secrets)
+   - [ ] Error handling? (no unwrap in handlers)
+   - [ ] Follows patterns from skill?
 
 ## Output Format
 
@@ -47,11 +52,16 @@ Implementation: path/to/file.rs
 ### Files Changed
 - path/to/file.rs — description
 
+### Self-Review
+- [ ] Logic: OK
+- [ ] Security: OK
+- [ ] Errors: OK
+- [ ] Patterns: OK
+
 ### Validation
-- target test: ✓ PASS
-- full suite: ✓ X passed
-- lint: ✓
-- build: ✓
+- target test: PASS
+- full suite: X passed
+- lint: PASS
 
 ### Next
 Ready for next test or REFACTOR phase

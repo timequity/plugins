@@ -481,9 +481,21 @@ Use agents for Test-Driven Development:
 ```
 1. tdd-test-writer → writes failing test (RED)
 2. Verify: cargo test → see failure
-3. rust-developer → implements minimal code (GREEN)
+3. rust-developer → implements minimal code (GREEN + self-review)
 4. Verify: cargo test → see pass
-5. Repeat
+5. Repeat for all features
+6. code-reviewer → final review before commit/merge
+```
+
+**Full cycle example:**
+```bash
+# Per feature (TDD cycles)
+Task[tdd-test-writer]: "GET /users endpoint"    # RED
+Task[rust-developer]: "make test pass"          # GREEN + self-review
+
+# After all features complete
+Task[code-reviewer]: "review all changes"       # REVIEW
+git add && git commit                           # COMMIT
 ```
 
 **Enable TDD enforcement hook** (blocks implementation without failing test):
@@ -501,6 +513,15 @@ Use agents for Test-Driven Development:
     }]
   }
 }
+```
+
+**Review checklist** (used by rust-developer self-review and code-reviewer):
+```
+□ Logic correct? Edge cases handled?
+□ Security: no injection, no hardcoded secrets?
+□ Error handling: no unwrap() in handlers?
+□ Patterns: follows skill guidelines?
+□ Tests: all pass, coverage adequate?
 ```
 
 ## Anti-patterns
