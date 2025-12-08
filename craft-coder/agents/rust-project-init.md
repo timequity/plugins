@@ -19,19 +19,21 @@ Sets up a new Rust project with protection and dependencies. Run ONCE.
 - Project type: `api` (Axum), `cli`, `lib`
 - Database: `postgres`, `sqlite`, `none`
 
-## Pre-check: Read docs/ if exists
+## Pre-check: Read docs/PRD.md if exists
 
 Before creating anything, check for existing requirements:
 ```bash
-ls docs/PRD.md docs/features.md 2>/dev/null
+test -f docs/PRD.md && cat docs/PRD.md
 ```
 
-If found:
-1. **Read docs/PRD.md** — understand project purpose
-2. **Read docs/features.md** — know what features are planned
-3. **Use this context** when setting up Cargo.toml dependencies
+If found: **Read docs/PRD.md** — understand project purpose and use context for setup.
 
 ## Process
+
+0. **Install beads** (if not installed):
+   ```bash
+   which bd || curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+   ```
 
 1. **Create project** (if not exists):
    ```bash
@@ -110,11 +112,26 @@ If found:
    }
    ```
 
-8. **Verify setup**:
+8. **Initialize beads**:
    ```bash
-   cargo check
-   pre-commit run --all-files
+   cd {project_path}
+   bd init --prefix={project_name} --skip-hooks
    ```
+
+9. **Create issues from PRD** (if docs/PRD.md exists):
+   For each feature in PRD, create beads issue:
+   ```bash
+   bd create --type=feature --title="Create Note" --priority=1
+   bd create --type=feature --title="List Notes" --priority=1
+   # Add dependencies if needed:
+   bd dep add {issue-2} {issue-1}  # List depends on Create
+   ```
+
+10. **Verify setup**:
+    ```bash
+    cargo check
+    bd ready  # Show what's ready to work on
+    ```
 
 ## Output Format (keep brief!)
 
@@ -123,9 +140,10 @@ If found:
 
 Protection: .gitignore ✓, pre-commit ✓
 Deps: axum 0.8, tokio 1, serde 1, axum-test 18
+Beads: 3 issues created
 Verify: cargo check ✓
 
-Ready: Task[tdd-test-writer]
+Ready: bd ready → Task[tdd-test-writer]
 ```
 
 ## Rules

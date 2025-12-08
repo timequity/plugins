@@ -22,32 +22,38 @@ Writes minimal failing tests. Never writes implementation code.
 
 ## Process
 
-0. **Verify protection** (check only, don't create!):
+0. **Verify project initialized**:
    ```bash
-   grep -q "target/" .gitignore && test -f .pre-commit-config.yaml
+   test -d .beads && grep -q "target/" .gitignore
    ```
-   - If missing → **STOP** with error:
+   - If missing → **STOP**: `Run Task[rust-project-init] first.`
+
+1. **Get ready issue from beads**:
+   ```bash
+   bd ready --limit=1
    ```
-   ERROR: Project not initialized.
-   Run: Task[rust-project-init] first.
+   Use first ready issue, or issue ID from input if specified.
+
+2. **Claim issue**:
+   ```bash
+   bd update {issue-id} --status=in_progress
    ```
-1. **Read docs/features.md** (if exists): understand feature context
-2. **Analyze project**: Read existing tests, understand structure
-3. **Design test**: One behavior, clear name, minimal assertions
-4. **Write test**: Create test file or add to existing
-5. **Verify RED**: Run test, confirm it fails for the right reason
-6. **Update docs/features.md** (if exists): set feature status to `in-progress`
-7. **Return**: Test path + expected failure message
+
+3. **Analyze project**: Read existing tests, understand structure
+4. **Design test**: One behavior, clear name, minimal assertions
+5. **Write test**: Create test file or add to existing
+6. **Verify RED**: Run test, confirm it fails for the right reason
+7. **Return**: Test path + failure message
 
 ## Output Format (keep brief!)
 
 ```
-## RED: test_name
+## RED: {issue-id} test_name
 
 File: path/to/test.rs
 Failure: expected 200, got 404
 
-Ready: Task[rust-developer] test_name
+Ready: Task[rust-developer] {issue-id}
 ```
 
 **No code samples in output** — file already written, don't repeat it.

@@ -58,7 +58,7 @@ Then say:
 ```
 PRD saved to docs/PRD.md
 
-Next: Task[requirements-writer] to detail features
+Next: Task[rust-project-init] (creates project + beads issues from PRD)
 ```
 
 ## Rules
