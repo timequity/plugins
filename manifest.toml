@@ -10,7 +10,7 @@ price_usd = 0.0
 [[packs]]
 id = "craft-coder"
 name = "Craft Coder"
-description = "Master your craft: backend, frontend, mobile, data, DevOps, debugging. 40+ skills for serious developers."
+description = "Master your craft: backend, frontend, mobile, data, DevOps, debugging. 50+ skills for serious developers."
 price_usd = 5.0
 
 [[packs]]

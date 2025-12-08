@@ -8,7 +8,7 @@ description: |
 
 # Craft Coder
 
-Master your craft. 40+ skills for serious developers.
+Master your craft. 50+ skills for serious developers.
 
 ## Skills by Category
 
