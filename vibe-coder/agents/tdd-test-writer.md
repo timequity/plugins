@@ -22,28 +22,34 @@ Writes minimal failing tests. Never writes implementation code.
 
 ## Process
 
-0. **Verify project initialized**:
+0. **Change to project directory** (CRITICAL for beads context):
+   ```bash
+   cd {project-path}
+   ```
+   All subsequent commands must run from project root.
+
+1. **Verify project initialized**:
    ```bash
    test -d .beads && grep -q "target/" .gitignore
    ```
    - If missing → **STOP**: `Run Task[rust-project-init] first.`
 
-1. **Get ready issue from beads**:
+2. **Get ready issue from beads**:
    ```bash
    bd ready --limit=1
    ```
    Use first ready issue, or issue ID from input if specified.
 
-2. **Claim issue**:
+3. **Claim issue**:
    ```bash
    bd update {issue-id} --status=in_progress
    ```
 
-3. **Analyze project**: Read existing tests, understand structure
-4. **Design test**: One behavior, clear name, minimal assertions
-5. **Write test**: Create test file or add to existing
-6. **Verify RED**: Run test, confirm it fails for the right reason
-7. **Return**: Test path + failure message
+4. **Analyze project**: Read existing tests, understand structure
+5. **Design test**: One behavior, clear name, minimal assertions
+6. **Write test**: Create test file or add to existing
+7. **Verify RED**: Run test, confirm it fails for the right reason
+8. **Return**: Test path + failure message
 
 ## Output Format (keep brief!)
 

@@ -21,32 +21,38 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 
 ## Process
 
-0. **Verify project initialized**:
+0. **Change to project directory** (CRITICAL for beads context):
+   ```bash
+   cd {project-path}
+   ```
+   All subsequent commands must run from project root.
+
+1. **Verify project initialized**:
    ```bash
    test -d .beads && grep -q "target/" .gitignore
    ```
    - If missing → **STOP**: `Run Task[rust-project-init] first.`
 
-1. **Get issue context**:
+2. **Get issue context**:
    ```bash
    bd show {issue-id}
    ```
 
-2. **Verify RED**: Run the specified test, confirm it fails
-3. **Analyze test**: Understand what behavior is expected
-4. **Load skill**: Read backend-rust SKILL.md for patterns
-5. **Add dependencies** (if needed):
+3. **Verify RED**: Run the specified test, confirm it fails
+4. **Analyze test**: Understand what behavior is expected
+5. **Load skill**: Read backend-rust SKILL.md for patterns
+6. **Add dependencies** (if needed):
    ```bash
    cargo search {crate} --limit 1
    ```
-6. **Implement minimal**: Write ONLY enough code to pass the test
-7. **Verify GREEN**: Run test, confirm it passes
-8. **Run full suite**: Ensure no regressions
-9. **Close issue**:
-   ```bash
-   bd close {issue-id}
-   ```
-10. **Self-review**: Check implementation against review checklist:
+7. **Implement minimal**: Write ONLY enough code to pass the test
+8. **Verify GREEN**: Run test, confirm it passes
+9. **Run full suite**: Ensure no regressions
+10. **Close issue**:
+    ```bash
+    bd close {issue-id}
+    ```
+11. **Self-review**: Check implementation against review checklist:
    - [ ] Logic correct? Edge cases?
    - [ ] Security? (no injection, no hardcoded secrets)
    - [ ] Error handling? (no unwrap in handlers)
