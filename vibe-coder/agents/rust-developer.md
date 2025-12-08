@@ -22,6 +22,8 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 
 ## Process
 
+0. **Check protection**: Verify `.gitignore` has `target/` and `.pre-commit-config.yaml` exists
+   - If missing: run setup from backend-rust skill FIRST section
 1. **Verify RED**: Run the specified test, confirm it fails
 2. **Analyze test**: Understand what behavior is expected
 3. **Load skill**: Read backend-rust SKILL.md for patterns

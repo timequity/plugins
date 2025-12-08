@@ -22,6 +22,8 @@ Writes minimal failing tests. Never writes implementation code.
 
 ## Process
 
+0. **Check protection**: Verify `.gitignore` has `target/` and `.pre-commit-config.yaml` exists
+   - If missing: run setup from backend-rust skill FIRST section
 1. **Analyze project**: Read existing tests, understand structure
 2. **Design test**: One behavior, clear name, minimal assertions
 3. **Write test**: Create test file or add to existing

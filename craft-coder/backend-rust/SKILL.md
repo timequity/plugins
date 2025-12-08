@@ -10,6 +10,64 @@ description: |
 
 # Rust Backend Stack
 
+## 🚨 FIRST: Project Protection Setup
+
+**MANDATORY before writing any code.** Run this on every new project:
+
+```bash
+# 1. Create .gitignore (ALWAYS include these)
+cat >> .gitignore << 'EOF'
+# Build artifacts
+target/
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.json
+EOF
+
+# 2. Check pre-commit installed
+which pre-commit || pip install pre-commit
+
+# 3. Setup pre-commit config
+cat > .pre-commit-config.yaml << 'EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: detect-private-key
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+EOF
+
+# 4. Install hooks
+pre-commit install
+
+# 5. Verify
+git status  # Should show .gitignore and .pre-commit-config.yaml
+```
+
+**Why mandatory:** Prevents accidental commit of `target/` (2GB+), secrets, credentials.
+
+For comprehensive secret protection, use: `skill: secrets-guardian`
+
+---
+
 ## Quick Reference
 
 | Topic | Reference |
