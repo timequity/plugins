@@ -11,19 +11,62 @@ description: |
 
 Understand what the user wants. Save to `docs/PRD.md`.
 
-## Questions (ask one at a time)
+## Questions (use AskUserQuestion tool with options)
 
-1. **What problem does this solve?**
-   - "What's frustrating about the current way?"
+Use AskUserQuestion tool for each question. Always provide 3-4 relevant options based on the idea context.
 
-2. **Who has this problem?**
-   - "Who would use this daily?"
+**Q1: Problem**
+```
+question: "Какую проблему это решает?"
+header: "Problem"
+options:
+  - label: "[contextual option 1]"
+    description: "Based on idea"
+  - label: "[contextual option 2]"
+    description: "Based on idea"
+  - label: "[contextual option 3]"
+    description: "Based on idea"
+# User can always select "Other" to type custom answer
+```
 
-3. **What's the first thing they'd do?**
-   - "When they open the app, what happens?"
+**Q2: User**
+```
+question: "Кто будет этим пользоваться?"
+header: "User"
+options:
+  - label: "Для себя"
+    description: "Личное использование"
+  - label: "AI агенты"
+    description: "Через API/MCP"
+  - label: "Команда"
+    description: "Совместная работа"
+```
 
-4. **How do they know it worked?**
-   - "What does success look like?"
+**Q3: Core Action**
+```
+question: "Что первое делает пользователь?"
+header: "Action"
+options:
+  - label: "[contextual action 1]"
+    description: "Based on idea"
+  - label: "[contextual action 2]"
+    description: "Based on idea"
+  - label: "[contextual action 3]"
+    description: "Based on idea"
+```
+
+**Q4: Success**
+```
+question: "Как понять что сработало?"
+header: "Success"
+options:
+  - label: "[contextual outcome 1]"
+    description: "Based on idea"
+  - label: "[contextual outcome 2]"
+    description: "Based on idea"
+  - label: "[contextual outcome 3]"
+    description: "Based on idea"
+```
 
 ## After Questions
 
