@@ -64,11 +64,11 @@ Sets up a new Rust project with protection and dependencies. Run ONCE.
    pre-commit install
    ```
 
-5. **Check dependency versions via Context7**:
+5. **Check dependency versions**:
+   ```bash
+   cargo search {crate} --limit 1
    ```
-   MANDATORY: Use mcp__context7__resolve-library-id + get-library-docs
-   OR fallback: cargo search {crate} --limit 1
-   ```
+   For documentation/examples (optional): use Context7 if configured
 
 6. **Setup Cargo.toml** based on project type:
 
@@ -134,6 +134,6 @@ Run: Task[tdd-test-writer] to start RED phase
 ## Rules
 
 - Run ONCE per project
-- ALWAYS use Context7 for versions (fallback: cargo search)
+- Use `cargo search` for versions (fast, reliable, no API key)
+- Context7 optional — for docs/examples only
 - Create .env.example if project needs env vars
-- Never hardcode versions without checking

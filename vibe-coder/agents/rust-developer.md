@@ -35,11 +35,10 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 2. **Analyze test**: Understand what behavior is expected
 3. **Load skill**: Read backend-rust SKILL.md for patterns
 4. **Add dependencies** (if needed):
-   - **MANDATORY**: Use Context7 first:
-     ```
-     mcp__context7__resolve-library-id → mcp__context7__get-library-docs
-     ```
-   - Fallback (if Context7 unavailable): `cargo search {crate} --limit 1`
+   ```bash
+   cargo search {crate} --limit 1
+   ```
+   - For docs/examples: use Context7 if configured (optional)
    - NEVER hardcode versions without checking
 5. **Implement minimal**: Write ONLY enough code to pass the test
 6. **Verify GREEN**: Run test, confirm it passes
