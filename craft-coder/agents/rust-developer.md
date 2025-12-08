@@ -40,7 +40,15 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 
 3. **Verify RED**: Run the specified test, confirm it fails
 4. **Analyze test**: Understand what behavior is expected
-5. **Load skill**: Read backend-rust SKILL.md for patterns
+5. **Load skill** (MUST READ before implementing):
+   ```bash
+   # Find and read the skill file
+   ```
+   Use Glob to find `**/skills/backend-rust/SKILL.md`, then Read it.
+   Key sections to use:
+   - Axum Patterns (handlers, extractors)
+   - Error Handling (AppError pattern)
+   - Anti-patterns (what NOT to do)
 6. **Add dependencies** (if needed):
    ```bash
    cargo search {crate} --limit 1

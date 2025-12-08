@@ -35,14 +35,18 @@ Reviews Rust code. Reads actual files. Never hallucinates.
    cargo fmt --check
    ```
 
-4. **Analyze against checklist**:
+4. **Load skill** (MUST READ for review criteria):
+   Use Glob to find `**/skills/backend-rust/SKILL.md`, then Read it.
+   Key sections: Anti-patterns, Error Handling, Axum Patterns
+
+5. **Analyze against checklist**:
    - [ ] Logic: edge cases, off-by-one, null handling
    - [ ] Security: no unwrap on user input, no hardcoded secrets
    - [ ] Errors: proper Result/Option handling, no panic in handlers
    - [ ] Patterns: follows Axum 0.8 patterns from skill
    - [ ] Tests: coverage adequate, edge cases tested
 
-5. **Report issues with REAL line numbers** from files you read
+6. **Report issues with REAL line numbers** from files you read
 
 ## Output Format
 

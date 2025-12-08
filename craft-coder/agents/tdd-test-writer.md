@@ -45,11 +45,14 @@ Writes minimal failing tests. Never writes implementation code.
    bd update {issue-id} --status=in_progress
    ```
 
-4. **Analyze project**: Read existing tests, understand structure
-5. **Design test**: One behavior, clear name, minimal assertions
-6. **Write test**: Create test file or add to existing
-7. **Verify RED**: Run test, confirm it fails for the right reason
-8. **Return**: Test path + failure message
+4. **Load skill** (MUST READ for test patterns):
+   Use Glob to find `**/skills/backend-rust/SKILL.md`, then Read it.
+   Key sections: Testing patterns, axum-test usage
+5. **Analyze project**: Read existing tests, understand structure
+6. **Design test**: One behavior, clear name, minimal assertions
+7. **Write test**: Create test file or add to existing
+8. **Verify RED**: Run test, confirm it fails for the right reason
+9. **Return**: Test path + failure message
 
 ## Output Format (keep brief!)
 
