@@ -40,22 +40,29 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 
 3. **Verify RED**: Run the specified test, confirm it fails
 4. **Analyze test**: Understand what behavior is expected
-5. **Load skill** (MUST READ before implementing):
-   ```bash
-   # Find and read the skill file
+5. **Load skill** (MANDATORY — do not skip!):
    ```
-   Use Glob to find `**/skills/backend-rust/SKILL.md`, then Read it.
-   Key sections to use:
-   - Axum Patterns (handlers, extractors)
-   - Error Handling (AppError pattern)
-   - Anti-patterns (what NOT to do)
+   Glob: **/skills/backend-rust/SKILL.md
+   Read: <found file>
+   ```
+   You MUST actually run Glob tool, then Read tool on the result.
+   After reading, extract and apply:
+   - Axum Patterns → use for handler signatures
+   - Error Handling → use AppError if handler can fail
+   - Anti-patterns → avoid these mistakes
+
+   **If you skip this step, your code will be rejected.**
+
 6. **Add dependencies** (if needed):
    ```bash
    cargo search {crate} --limit 1
    ```
 7. **Implement minimal**: Write ONLY enough code to pass the test
 8. **Verify GREEN**: Run test, confirm it passes
-9. **Run full suite**: Ensure no regressions
+   ```bash
+   cargo test --all
+   ```
+9. **Run full suite**: Ensure no regressions (use `cargo test --all`)
 10. **Close issue**:
     ```bash
     bd close {issue-id}
