@@ -7,7 +7,7 @@ description: |
   Triggers: "implement", "make test pass", "green phase", "rust implement".
 tools: Bash, Glob, Grep, Read, Edit, Write
 model: opus
-skills: backend-rust, test-driven-development
+skills: backend-rust, test-driven-development, frontend-htmx
 ---
 
 # Rust Developer (TDD Mode)
@@ -40,17 +40,27 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
 
 3. **Verify RED**: Run the specified test, confirm it fails
 4. **Analyze test**: Understand what behavior is expected
-5. **Load skill** (MANDATORY — do not skip!):
+5. **Load skills** (MANDATORY — do not skip!):
    ```
    Glob: **/skills/backend-rust/SKILL.md
    Read: <found file>
    ```
-   You MUST actually run Glob tool, then Read tool on the result.
    After reading, extract and apply:
    - Axum Patterns → use for handler signatures
    - Error Handling → use AppError if handler can fail
    - Anti-patterns → avoid these mistakes
 
+   **For HTMX/template features**, also load:
+   ```
+   Glob: **/skills/frontend-htmx/SKILL.md
+   Read: <found file>
+   ```
+   After reading, extract and apply:
+   - Askama templates → use Template derive
+   - HTMX handlers → return partials for HX-Request
+   - Page vs partial → full HTML vs fragment
+
+   You MUST actually run Glob tool, then Read tool on the result.
    **If you skip this step, your code will be rejected.**
 
 6. **Add dependencies** (if needed):

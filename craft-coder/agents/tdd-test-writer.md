@@ -7,7 +7,7 @@ description: |
   Triggers: "write test for", "tdd test", "failing test", "red phase".
 tools: Bash, Glob, Grep, Read, Edit, Write
 model: opus
-skills: test-driven-development, backend-rust
+skills: test-driven-development, backend-rust, frontend-htmx
 ---
 
 # TDD Test Writer
@@ -45,14 +45,21 @@ Writes minimal failing tests. Never writes implementation code.
    bd update {issue-id} --status=in_progress
    ```
 
-4. **Load skill** (MANDATORY — do not skip!):
+4. **Load skills** (MANDATORY — do not skip!):
    ```
    Glob: **/skills/backend-rust/SKILL.md
    Read: <found file>
    ```
-   You MUST actually run Glob tool, then Read tool on the result.
    Key sections: Testing patterns, axum-test usage, TDD Workflow.
 
+   **For HTMX/template tests**, also load:
+   ```
+   Glob: **/skills/frontend-htmx/SKILL.md
+   Read: <found file>
+   ```
+   Key sections: Testing HTMX, partial vs page tests.
+
+   You MUST actually run Glob tool, then Read tool on the result.
    **If you skip this step, your tests will be rejected.**
 
 5. **Analyze project**: Read existing tests, understand structure

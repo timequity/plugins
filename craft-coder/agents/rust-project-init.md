@@ -6,7 +6,7 @@ description: |
   Does NOT create tests or routes — only scaffolding.
 tools: Bash, Read, Write
 model: opus
-skills: backend-rust
+skills: backend-rust, frontend-htmx
 ---
 
 # Rust Project Initializer
@@ -16,7 +16,7 @@ Sets up a new Rust project with protection and dependencies. Run ONCE.
 ## Input Required
 
 - Project path (existing cargo project or path to create)
-- Project type: `api` (Axum), `cli`, `lib`
+- Project type: `api` (JSON API), `fullstack` (API + HTMX frontend), `cli`, `lib`
 - Database: `postgres`, `sqlite`, `none`
 
 ## Pre-check: Read docs/PRD.md if exists
@@ -86,7 +86,7 @@ If found: **Read docs/PRD.md** — understand project purpose and use context fo
 
 6. **Setup Cargo.toml** based on project type:
 
-   **API (Axum):**
+   **API (JSON only):**
    ```toml
    [package]
    name = "{name}"
@@ -103,6 +103,27 @@ If found: **Read docs/PRD.md** — understand project purpose and use context fo
    axum-test = "{latest}"
    ```
 
+   **Fullstack (API + HTMX frontend):**
+   ```toml
+   [package]
+   name = "{name}"
+   version = "0.1.0"
+   edition = "2024"
+
+   [dependencies]
+   axum = "{latest}"
+   tokio = { version = "1", features = ["full"] }
+   serde = { version = "1", features = ["derive"] }
+   serde_json = "1"
+   # HTMX frontend
+   askama = "0.12"
+   askama_axum = "0.4"
+   axum-htmx = "0.6"
+
+   [dev-dependencies]
+   axum-test = "{latest}"
+   ```
+
 7. **Create src/lib.rs stub**:
    ```rust
    use axum::Router;
@@ -112,13 +133,23 @@ If found: **Read docs/PRD.md** — understand project purpose and use context fo
    }
    ```
 
-8. **Initialize beads**:
+8. **Create templates (fullstack only)**:
+   ```
+   templates/
+   ├── base.html         # Layout with HTMX script
+   └── pages/
+       └── index.html    # Home page extending base
+   ```
+
+   See frontend-htmx skill for template content.
+
+9. **Initialize beads**:
    ```bash
    cd {project_path}
    bd init --prefix={project_name} --skip-hooks
    ```
 
-9. **Create issues from PRD** (if docs/PRD.md exists):
+10. **Create issues from PRD** (if docs/PRD.md exists):
    For each feature in PRD, create beads issue:
    ```bash
    bd create --type=feature --title="Create Note" --priority=1
@@ -127,7 +158,7 @@ If found: **Read docs/PRD.md** — understand project purpose and use context fo
    bd dep add {issue-2} {issue-1}  # List depends on Create
    ```
 
-10. **Verify setup**:
+11. **Verify setup**:
     ```bash
     cargo check
     bd ready  # Show what's ready to work on

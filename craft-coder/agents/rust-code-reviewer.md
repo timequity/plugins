@@ -93,3 +93,5 @@ All checks pass. No issues found. Ready to commit.
 - Run cargo clippy/test BEFORE manual review
 - Reference line numbers from actual files
 - If file doesn't exist, say so — don't imagine contents
+- **edition = "2024" is CORRECT** — stable since Rust 1.85 (Feb 2025), do NOT flag as error
+- **Axum route syntax**: both `:id` and `{id}` are valid in Axum 0.8, prefer `:id` for consistency
