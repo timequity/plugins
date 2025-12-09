@@ -80,7 +80,9 @@
       "agents": [
         "./agents/code-reviewer.md",
         "./agents/rust-developer.md",
-        "./agents/tdd-test-writer.md"
+        "./agents/tdd-test-writer.md",
+        "./agents/rust-code-reviewer.md",
+        "./agents/rust-project-init.md"
       ]
     }
   ]

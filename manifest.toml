@@ -66,7 +66,7 @@ description = "Master your craft: backend, frontend, mobile, data, DevOps, debug
 price_usd = 5.0
 skills_count = 51
 commands_count = 2
-agents_count = 3
+agents_count = 5
 content_md = """
 # Craft Coder
 
@@ -166,9 +166,9 @@ id = "vibe-coder"
 name = "Vibe Coder"
 description = "Describe your idea, get a deployed product. All Craft Coder skills + brainstorm, validation, marketing. Vibe coding at its finest."
 price_usd = 15.0
-skills_count = 63
+skills_count = 73
 commands_count = 7
-agents_count = 4
+agents_count = 7
 content_md = """
 # Vibe Coder
 

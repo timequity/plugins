@@ -83,7 +83,17 @@
         "./skills/infra/ci-cd-pipelines",
         "./skills/infra/cost-optimization",
         "./skills/infra/security-hardening",
-        "./skills/infra/disaster-recovery"
+        "./skills/infra/disaster-recovery",
+        "./skills/beads-validation",
+        "./skills/browser-extension",
+        "./skills/cli-tool",
+        "./skills/design-preferences",
+        "./skills/discord-bot",
+        "./skills/frontend-htmx",
+        "./skills/graphql-api",
+        "./skills/project-types",
+        "./skills/project-validation",
+        "./skills/telegram-bot"
       ],
       "commands": [
         "./commands/brainstorm.md",
@@ -98,7 +108,10 @@
         "./agents/vibe-coder.md",
         "./agents/code-reviewer.md",
         "./agents/rust-developer.md",
-        "./agents/tdd-test-writer.md"
+        "./agents/tdd-test-writer.md",
+        "./agents/debugger.md",
+        "./agents/rust-code-reviewer.md",
+        "./agents/rust-project-init.md"
       ]
     }
   ]

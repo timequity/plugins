@@ -31,7 +31,11 @@
       "skills": [
         "./skills/course-help",
         "./skills/progress-manager",
-        "./skills/lessons"
+        "./skills/lessons",
+        "./skills/learning-path",
+        "./skills/foundations",
+        "./skills/intermediate",
+        "./skills/advanced"
       ],
       "agents": [
         "./agents/tutor.md"
