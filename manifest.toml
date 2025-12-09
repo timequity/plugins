@@ -2,7 +2,7 @@
 # 3 plugins: Course (FREE), Craft Coder ($5), Vibe Coder ($15)
 
 [[packs]]
-id = "claude-code-course"
+id = "ccc"
 name = "Claude Code Course"
 description = "Master Claude Code from zero to expert. Socratic assessment places you at the right level. Progressive skills from basics to advanced workflows."
 price_usd = 0.0
