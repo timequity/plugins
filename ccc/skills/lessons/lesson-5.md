@@ -203,28 +203,43 @@ Now I'll demonstrate putting everything together.
 
 **IMPORTANT:** As the tutor, YOU (Claude) must execute this practice, not the user.
 
-1. Create the project structure:
+### 1. Create the project structure:
 
 ```bash
-mkdir -p todo-demo/.claude/skills/todo-style
+mkdir -p todo-app/.claude/skills/todo-style
 ```
 
-2. Create the HTML:
+### 2. Create the HTML (with congratulations overlay):
 
 ```bash
-cat > todo-demo/index.html << 'EOF'
+cat > todo-app/index.html << 'EOF'
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Todo App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Todos - Claude Code Course</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="congrats" class="congrats-overlay">
+    <div class="congrats-content">
+      <h1>Congratulations!</h1>
+      <p>You completed the Claude Code Course</p>
+      <div class="stats">5 lessons completed</div>
+      <button onclick="closeCongrats()">Start Using Your App</button>
+    </div>
+    <div class="confetti" id="confetti"></div>
+  </div>
+
   <div class="container">
     <h1>My Todos</h1>
-    <input type="text" id="input" placeholder="Add a task...">
-    <button onclick="addTodo()">Add</button>
+    <div class="input-row">
+      <input type="text" id="input" placeholder="Add a task..." onkeypress="handleKey(event)">
+      <button onclick="addTodo()">Add</button>
+    </div>
     <ul id="list"></ul>
+    <div class="footer">Built with Claude Code</div>
   </div>
   <script src="app.js"></script>
 </body>
@@ -232,43 +247,246 @@ cat > todo-demo/index.html << 'EOF'
 EOF
 ```
 
-3. Create the CSS:
+### 3. Create the CSS (Tech Innovation theme + glassmorphism):
 
 ```bash
-cat > todo-demo/style.css << 'EOF'
-body { font-family: system-ui; max-width: 400px; margin: 50px auto; }
-.container { padding: 20px; }
-input { padding: 8px; width: 70%; }
-button { padding: 8px 16px; }
-ul { list-style: none; padding: 0; }
-li { padding: 10px; margin: 5px 0; background: #f5f5f5; border-radius: 4px; }
+cat > todo-app/style.css << 'EOF'
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e1e1e 0%, #0a1628 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0, 102, 255, 0.2);
+}
+
+h1 {
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 102, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus { border-color: #0066ff; }
+input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #0066ff, #00ffff);
+  border: none;
+  border-radius: 8px;
+  color: #1e1e1e;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+}
+
+ul { list-style: none; }
+
+li {
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideIn 0.3s ease;
+}
+
+li.done { opacity: 0.5; text-decoration: line-through; }
+li span { cursor: pointer; flex: 1; }
+li button { padding: 4px 12px; background: rgba(255, 0, 0, 0.2); font-size: 12px; }
+
+.footer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  margin-top: 24px;
+}
+
+/* Congrats Overlay */
+.congrats-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 22, 40, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease;
+}
+
+.congrats-overlay.hidden { display: none; }
+
+.congrats-content {
+  text-align: center;
+  animation: scaleIn 0.5s ease 0.2s both;
+}
+
+.congrats-content h1 {
+  font-size: 48px;
+  background: linear-gradient(135deg, #0066ff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+.congrats-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.stats {
+  color: #00ffff;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.congrats-content button {
+  padding: 16px 32px;
+  font-size: 18px;
+  animation: pulse 2s infinite;
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideIn { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4); } 50% { box-shadow: 0 0 0 15px rgba(0, 102, 255, 0); } }
+@keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 EOF
 ```
 
-4. Create the JavaScript:
+### 4. Create the JavaScript (with localStorage and confetti):
 
 ```bash
-cat > todo-demo/app.js << 'EOF'
-const todos = [];
+cat > todo-app/app.js << 'EOF'
+let todos = JSON.parse(localStorage.getItem('todos') || '[]');
+
+function saveTodos() {
+  localStorage.setItem('todos', JSON.stringify(todos));
+}
+
 function addTodo() {
   const input = document.getElementById('input');
-  if (input.value) {
-    todos.push(input.value);
+  const text = input.value.trim();
+  if (text) {
+    todos.push({ id: Date.now(), text, done: false });
+    saveTodos();
     render();
     input.value = '';
   }
 }
+
+function handleKey(e) {
+  if (e.key === 'Enter') addTodo();
+}
+
+function toggleTodo(id) {
+  const todo = todos.find(t => t.id === id);
+  if (todo) { todo.done = !todo.done; saveTodos(); render(); }
+}
+
+function deleteTodo(id) {
+  todos = todos.filter(t => t.id !== id);
+  saveTodos();
+  render();
+}
+
 function render() {
   const list = document.getElementById('list');
-  list.innerHTML = todos.map(t => `<li>${t}</li>`).join('');
+  list.innerHTML = todos.map(t => `
+    <li class="${t.done ? 'done' : ''}">
+      <span onclick="toggleTodo(${t.id})">${t.text}</span>
+      <button onclick="deleteTodo(${t.id})">Delete</button>
+    </li>
+  `).join('');
 }
+
+function closeCongrats() {
+  document.getElementById('congrats').classList.add('hidden');
+}
+
+function createConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#0066ff', '#00ffff', '#ffffff', '#ff6b6b', '#ffd93d'];
+  for (let i = 0; i < 50; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 2 + 's';
+    piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+    container.appendChild(piece);
+  }
+}
+
+render();
+createConfetti();
 EOF
 ```
 
-5. Create the style skill:
+### 5. Create the style skill:
 
 ```bash
-cat > todo-demo/.claude/skills/todo-style/SKILL.md << 'EOF'
+cat > todo-app/.claude/skills/todo-style/SKILL.md << 'EOF'
 ---
 name: todo-style
 description: |
@@ -277,33 +495,51 @@ description: |
   Triggers: "style", "css", "design".
 ---
 
-# Todo App Styles
+# Todo App Styles (Tech Innovation Theme)
 
-- Background: #f5f5f5
-- Accent: #4CAF50
-- Border radius: 4px
-- Font: system-ui
+## Colors
+- Primary: #0066ff (Electric Blue)
+- Accent: #00ffff (Neon Cyan)
+- Background: #1e1e1e (Dark Gray)
+- Text: #ffffff
+
+## Design
+- Glassmorphism cards
+- 16px border radius
+- Gradient buttons
+- Smooth animations
 EOF
 ```
 
-6. Show what was created:
+### 6. Show what was created:
 
 ```bash
-find todo-demo -type f
+find todo-app -type f
 ```
 
-7. Congratulate:
+### 7. Open in browser (cross-platform):
+
+```bash
+# macOS
+open todo-app/index.html 2>/dev/null || \
+# Linux
+xdg-open todo-app/index.html 2>/dev/null || \
+# Windows (Git Bash / WSL)
+start todo-app/index.html 2>/dev/null || \
+echo "Open todo-app/index.html in your browser"
+```
+
+### 8. Congratulate:
 
 ```
 ✓ Course completed!
 
 ████████████████████ 100%
 
-I created a mini todo app with:
-- index.html — structure
-- style.css — styling
-- app.js — functionality
-- .claude/skills/todo-style/SKILL.md — style guide
+Your graduation gift: a beautiful todo app with confetti!
+
+The app is saved in: ./todo-app/
+You can open it anytime in your browser.
 
 You've learned:
 - Claude Code basics
@@ -320,4 +556,4 @@ What's next?
 
 **After execution:**
 - Update progress: `practice_completed: true`, `completed: true`
-- Clean up: `rm -rf todo-demo` (demo only)
+- DO NOT delete the app — it's the user's graduation gift!
