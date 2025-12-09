@@ -9,6 +9,55 @@ price_usd = 0.0
 skills_count = 7
 commands_count = 6
 agents_count = 1
+content_md = """
+# Claude Code Course
+
+Master Claude Code from zero to expert in 5 hands-on lessons.
+
+## What You'll Learn
+
+| Lesson | Topic | What You'll Do |
+|--------|-------|----------------|
+| 1 | Getting Started | First commands, file operations |
+| 2 | Skills | Create your first skill |
+| 3 | Commands & Hooks | Customize with slash commands |
+| 4 | Agents | Build autonomous agents |
+| 5 | Full Project | Build a complete application |
+
+## How It Works
+
+```
+/ccc:course    Start or continue the course
+/ccc:lesson N  Jump to specific lesson (1-5)
+/ccc:practice  Do hands-on exercises
+/ccc:progress  Check your progress
+```
+
+## Course Philosophy
+
+```
+Not this:                      This:
++-----------------+           +-----------------+
+| Read 50 pages   |           | "Let's build    |
+| of docs         |     ->    |  something"     |
+| Then try stuff  |           |                 |
++-----------------+           | Learn by doing  |
+                              +-----------------+
+```
+
+## Features
+
+- **5 Lessons** - Progressive, hands-on learning
+- **Practice Tasks** - Real exercises in each lesson
+- **Progress Tracking** - Pick up where you left off
+- **Tutor Agent** - AI instructor guides you
+
+## Quick Start
+
+Just say "teach me Claude Code" or run `/ccc:course`.
+
+The tutor will guide you from there.
+"""
 
 [[packs]]
 id = "craft-coder"
@@ -18,6 +67,99 @@ price_usd = 5.0
 skills_count = 51
 commands_count = 2
 agents_count = 3
+content_md = """
+# Craft Coder
+
+Master your craft. 50+ skills for serious developers.
+
+## Skills by Category
+
+### Backend Development
+| Skill | Description |
+|-------|-------------|
+| `backend-core` | API design, auth, security, databases |
+| `backend-python` | FastAPI, Django, SQLAlchemy |
+| `backend-nodejs` | Express, NestJS, Prisma |
+| `backend-rust` | Axum, Actix, SQLx |
+
+### Frontend Development
+| Skill | Description |
+|-------|-------------|
+| `frontend-react` | React 18+, hooks, state management |
+| `frontend-design` | Distinctive UI, anti-AI-slop |
+| `theme-factory` | Colors, typography, design systems |
+
+### Mobile Development
+| Skill | Description |
+|-------|-------------|
+| `react-native-expert` | Core RN patterns |
+| `expo-workflows` | Expo + EAS builds |
+| `mobile-ui` | Mobile-specific UI |
+| `app-store-deploy` | App Store / Play Store |
+| `offline-first` | Offline data sync |
+| `push-notifications` | FCM/APNs |
+| `deep-linking` | URL schemes, universal links |
+
+### Data Engineering
+| Skill | Description |
+|-------|-------------|
+| `pipeline-design` | ETL/ELT architecture |
+| `dbt-expert` | dbt models, tests, docs |
+| `airflow-workflows` | Airflow DAGs |
+| `data-modeling` | Dimensional modeling |
+| `data-quality` | Validation, monitoring |
+| `warehouse-optimization` | Query performance |
+| `spark-basics` | PySpark |
+| `data-governance` | Lineage, cataloging |
+
+### Infrastructure
+| Skill | Description |
+|-------|-------------|
+| `terraform-expert` | Infrastructure as Code |
+| `kubernetes-ops` | K8s deployment |
+| `monitoring-setup` | Prometheus, Grafana |
+| `incident-response` | On-call procedures |
+| `ci-cd-pipelines` | GitHub Actions, GitLab CI |
+| `cost-optimization` | Cloud cost reduction |
+| `security-hardening` | Infrastructure security |
+| `disaster-recovery` | Backup, DR planning |
+
+### Testing & Quality
+| Skill | Description |
+|-------|-------------|
+| `testing` | Unit, integration, e2e |
+| `testing-basics` | Core patterns |
+| `test-driven-development` | TDD cycle |
+| `testing-anti-patterns` | What to avoid |
+| `code-review` | PR workflow |
+
+### Debugging
+| Skill | Description |
+|-------|-------------|
+| `systematic-debugging` | Four-phase methodology |
+| `root-cause-tracing` | Find actual causes |
+| `defense-in-depth` | Prevention |
+| `condition-based-waiting` | Async issues |
+| `performance-profiling` | Find bottlenecks |
+| `postmortem-writing` | Incident analysis |
+
+## Agents
+
+- **code-reviewer** - Autonomous code review
+
+## Quick Start
+
+Just describe what you need:
+
+```
+"Help me build a REST API for user management"
+"Create a React dashboard"
+"Debug this performance issue"
+"Set up Kubernetes monitoring"
+```
+
+Claude will use the right skills automatically.
+"""
 
 [[packs]]
 id = "vibe-coder"
@@ -27,3 +169,89 @@ price_usd = 15.0
 skills_count = 63
 commands_count = 7
 agents_count = 4
+content_md = """
+# Vibe Coder
+
+Describe what you want. Get a deployed product.
+
+## The Vibe
+
+```
+You: "I want an app for tracking expenses"
+     |
+Claude: Asks a few questions
+     |
+Claude: Builds everything (hidden complexity)
+     |
+You: Done! [Preview] [Deploy]
+```
+
+## What's Included
+
+### MVP Workflow (unique to Vibe Coder)
+| Skill | What it does |
+|-------|--------------|
+| `brainstorming` | Refine ideas with Socratic dialogue |
+| `idea-validation` | Validate problem/solution fit |
+| `stack-selector` | Choose tech stack automatically |
+| `ui-generator` | Create UI from descriptions |
+| `feature-builder` | Add features incrementally |
+| `db-designer` | Design database schema |
+| `api-generator` | Generate API endpoints |
+| `deploy-automation` | Deploy to production |
+
+### All Craft Coder Skills (40+)
+- **Backend**: Python, Node.js, Rust
+- **Frontend**: React, design systems
+- **Mobile**: React Native, Expo
+- **Data**: Pipelines, dbt, Airflow
+- **Infrastructure**: Terraform, K8s, monitoring
+- **Quality**: Testing, code review, debugging
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/vibe:brainstorm` | Refine idea with Socratic dialogue |
+| `/vibe:idea` | Start from scratch with simple questions |
+| `/vibe:build` | Create the app (full pipeline) |
+| `/vibe:add` | Add feature to existing app |
+| `/vibe:preview` | Show current state |
+| `/vibe:deploy` | Publish to production |
+
+## Agents
+
+- **vibe-coder** - Build apps from descriptions
+- **code-reviewer** - Review code automatically
+
+## Hidden Pipeline
+
+Every change runs through:
+1. TDD (test first, then implement)
+2. Automated tests
+3. Security checks (OWASP)
+4. Code review (auto-fix issues)
+
+User only sees pass or fail - never the process.
+
+## Templates
+
+| Template | When to use |
+|----------|-------------|
+| nextjs-supabase | Web apps, SaaS, dashboards |
+| fastapi-postgres | APIs, backends, AI/ML projects |
+| hono-drizzle | Edge, serverless, Cloudflare |
+| landing-page | Marketing sites, portfolios |
+
+Stack selector chooses automatically.
+
+## No Technical Jargon
+
+You never need to know:
+- What framework to use
+- How to structure code
+- What tests to write
+- How to deploy
+
+Just describe what you want. Vibe coding at its finest.
+"""
