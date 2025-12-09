@@ -24,7 +24,7 @@ Lesson {N} doesn't exist. Available lessons: 1-5.
 
 Lesson content is in:
 ```
-plugins/claude-code-course/lessons/en/
+ccc/skills/lessons/
 ├── lesson-1.md
 ├── lesson-2.md
 ├── lesson-3.md
@@ -32,9 +32,17 @@ plugins/claude-code-course/lessons/en/
 └── lesson-5.md
 ```
 
-Read `lesson-{N}.md` and show content.
+Read `lesson-{N}.md` from the lessons skill directory and show content.
 
 ### 3. Update Progress
+
+Progress file: `~/.claude-course/progress.json`
+
+If file doesn't exist, create it:
+```bash
+mkdir -p ~/.claude-course
+echo '{"version":"1.0.0","current_lesson":1,"lessons":{},"completed":false}' > ~/.claude-course/progress.json
+```
 
 1. Set `current_lesson: N`
 2. If no entry for lesson N, create:
@@ -46,7 +54,7 @@ Read `lesson-{N}.md` and show content.
      "practice_attempts": 0
    }
    ```
-3. Save progress
+3. Save progress to `~/.claude-course/progress.json`
 
 ### 4. Lesson Format
 
