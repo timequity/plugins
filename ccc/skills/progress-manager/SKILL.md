@@ -10,11 +10,10 @@ description: |
 
 Tracks user progress through the Claude Code Course.
 
-## Storage Location
+## Storage Location (Cross-Platform)
 
-```
-~/.claude-course/progress.json
-```
+- macOS/Linux: `$HOME/.claude-course/progress.json`
+- Windows: `%USERPROFILE%\.claude-course\progress.json`
 
 ## Progress Schema
 
@@ -41,6 +40,7 @@ Tracks user progress through the Claude Code Course.
 ### Load Progress
 
 ```bash
+# Unix/macOS/Linux
 PROGRESS_FILE="$HOME/.claude-course/progress.json"
 if [ -f "$PROGRESS_FILE" ]; then
   cat "$PROGRESS_FILE"
@@ -49,17 +49,37 @@ else
 fi
 ```
 
+```powershell
+# Windows PowerShell
+$ProgressFile = "$env:USERPROFILE\.claude-course\progress.json"
+if (Test-Path $ProgressFile) { Get-Content $ProgressFile }
+else { '{"version":"1.0.0","current_lesson":1,"lessons":{},"completed":false}' }
+```
+
 ### Save Progress
 
 ```bash
+# Unix/macOS/Linux
 mkdir -p "$HOME/.claude-course"
 echo '$PROGRESS_JSON' > "$HOME/.claude-course/progress.json"
+```
+
+```powershell
+# Windows PowerShell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude-course" | Out-Null
+$PROGRESS_JSON | Out-File "$env:USERPROFILE\.claude-course\progress.json"
 ```
 
 ### Reset Progress
 
 ```bash
+# Unix/macOS/Linux
 rm -f "$HOME/.claude-course/progress.json"
+```
+
+```powershell
+# Windows PowerShell
+Remove-Item "$env:USERPROFILE\.claude-course\progress.json" -Force -ErrorAction SilentlyContinue
 ```
 
 ## Display Progress
