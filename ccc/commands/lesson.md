@@ -36,21 +36,11 @@ Read `lesson-{N}.md` from the lessons skill directory and show content.
 
 ### 3. Update Progress
 
-Progress file location (cross-platform):
-- macOS/Linux: `$HOME/.claude-course/progress.json`
-- Windows: `%USERPROFILE%\.claude-course\progress.json`
+Progress file: `./progress.json` (in current directory)
 
 If file doesn't exist, create it:
-```bash
-# Unix/macOS/Linux/Git Bash/WSL
-mkdir -p "$HOME/.claude-course"
-echo '{"version":"1.0.0","current_lesson":1,"lessons":{},"completed":false}' > "$HOME/.claude-course/progress.json"
-```
-
-```powershell
-# Windows PowerShell
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude-course"
-'{"version":"1.0.0","current_lesson":1,"lessons":{},"completed":false}' | Out-File "$env:USERPROFILE\.claude-course\progress.json"
+```json
+{"version":"1.0.0","current_lesson":1,"lessons":{},"completed":false}
 ```
 
 1. Set `current_lesson: N`
