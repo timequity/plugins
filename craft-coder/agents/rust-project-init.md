@@ -124,26 +124,93 @@ If found: **Read docs/PRD.md** — understand project purpose and use context fo
    axum-test = "{latest}"
    ```
 
-7. **Create src/lib.rs stub**:
+7. **Create src/lib.rs with health endpoint**:
    ```rust
-   use axum::Router;
+   use axum::{Router, routing::get};
+
+   pub async fn health() -> &'static str {
+       "ok"
+   }
 
    pub fn create_app() -> Router {
        Router::new()
+           .route("/health", get(health))
+   }
+
+   #[cfg(test)]
+   mod tests {
+       use super::*;
+       use axum_test::TestServer;
+
+       #[tokio::test]
+       async fn test_health_check_responds() {
+           let server = TestServer::new(create_app()).unwrap();
+           let response = server.get("/health").await;
+           response.assert_status_ok();
+           response.assert_text("ok");
+       }
    }
    ```
 
-8. **Create templates (fullstack only)**:
+8. **Create src/main.rs**:
+   ```rust
+   use {crate_name}::create_app;
+   use tokio::net::TcpListener;
+
+   #[tokio::main]
+   async fn main() {
+       let app = create_app();
+       let listener = TcpListener::bind("127.0.0.1:3000").await.unwrap();
+       println!("Server running at http://127.0.0.1:3000");
+       axum::serve(listener, app).await.unwrap();
+   }
+   ```
+
+9. **Create templates (fullstack only)**:
    ```
    templates/
    ├── base.html         # Layout with HTMX script
    └── pages/
-       └── index.html    # Home page extending base
+       └── index.html    # Home page with form and list
    ```
 
-   See frontend-htmx skill for template content.
+   **base.html**: see frontend-htmx skill
 
-9. **Initialize beads**:
+   **index.html** (MUST include working UI):
+   ```html
+   {% extends "base.html" %}
+   {% block content %}
+   <h1>{{ title }}</h1>
+
+   <!-- Create form -->
+   <form hx-post="/items" hx-target="#list" hx-swap="beforeend">
+       <input name="title" placeholder="Title" required>
+       <input name="content" placeholder="Content">
+       <button type="submit">Add</button>
+   </form>
+
+   <!-- Items list -->
+   <div id="list">
+       {% for item in items %}
+       <div id="item-{{ item.id }}">
+           <strong>{{ item.title }}</strong>
+           <p>{{ item.content }}</p>
+           <button hx-delete="/items/{{ item.id }}"
+                   hx-target="#item-{{ item.id }}"
+                   hx-swap="outerHTML"
+                   hx-confirm="Delete?">Delete</button>
+       </div>
+       {% endfor %}
+   </div>
+
+   <!-- Empty state -->
+   {% if items.is_empty() %}
+   <p id="empty-state">No items yet. Add one above!</p>
+   {% endif %}
+   {% endblock %}
+   ```
+
+10. **Initialize beads**:
    ```bash
    cd {project_path}
    bd init --prefix={project_name} --skip-hooks
@@ -180,7 +247,9 @@ Ready: bd ready → Task[tdd-test-writer]
 ## Rules
 
 - Run ONCE per project
-- **NEVER create tests** — that's tdd-test-writer's job
-- **NEVER create routes** — only empty Router stub
+- **ALWAYS create main.rs** — app must be runnable
+- **ALWAYS create /health endpoint** with test — baseline for "app works"
+- **Fullstack: create complete UI templates** — forms, buttons, delete actions
 - Use `cargo search` for versions
 - Keep output minimal — no code samples in response
+- **Verify with `cargo test && cargo run &`** — must start without error

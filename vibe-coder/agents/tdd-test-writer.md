@@ -28,11 +28,13 @@ Writes minimal failing tests. Never writes implementation code.
    ```
    All subsequent commands must run from project root.
 
-1. **Verify project initialized**:
+1. **Verify project initialized AND runnable**:
    ```bash
-   test -d .beads && grep -q "target/" .gitignore
+   test -d .beads && test -f src/main.rs && cargo test --test '*health*' 2>/dev/null
    ```
-   - If missing → **STOP**: `Run Task[rust-project-init] first.`
+   - If .beads missing → **STOP**: `Run Task[rust-project-init] first.`
+   - If main.rs missing → **STOP**: `main.rs required. Run Task[rust-project-init].`
+   - If health test missing/fails → **STOP**: `Health check required. Fix project setup.`
 
 2. **Get ready issue from beads**:
    ```bash
@@ -93,6 +95,28 @@ Ready: Task[rust-developer] {issue-id}
 - Use real assertions, not `todo!()` or `unimplemented!()`
 - Follow project's existing test patterns
 - Check crate versions via Context7 for test dependencies
+
+## Required Tests by Project Type
+
+**All projects MUST have:**
+- `test_health_check_responds` — GET /health returns 200
+
+**Fullstack (HTMX) projects MUST also have:**
+- `test_index_page_has_form` — main page contains create form
+- `test_index_page_has_delete_buttons` — items have delete buttons
+- `test_form_submits_via_htmx` — form has hx-post attribute
+
+Example UI presence test:
+```rust
+#[tokio::test]
+async fn test_index_page_has_form() {
+    let server = TestServer::new(create_app()).unwrap();
+    let response = server.get("/").await;
+    let html = response.text();
+    assert!(html.contains("hx-post"), "Page must have HTMX form");
+    assert!(html.contains(r#"type="submit""#), "Page must have submit button");
+}
+```
 
 ## Stubs Policy
 

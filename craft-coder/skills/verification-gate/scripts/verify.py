@@ -117,7 +117,79 @@ def check_rust(path: str) -> list[CheckResult]:
         auto_fixable=False
     ))
 
+    # Check: app starts and responds to health check
+    startup_result = check_rust_startup(path)
+    results.append(startup_result)
+
     return results
+
+
+def check_rust_startup(path: str) -> CheckResult:
+    """Verify Rust app can start and respond to /health endpoint."""
+    import time
+    import signal
+
+    # Start the app in background
+    try:
+        proc = subprocess.Popen(
+            ["cargo", "run"],
+            cwd=path,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+    except Exception as e:
+        return CheckResult(
+            name="startup",
+            passed=False,
+            message=f"Failed to start app: {e}",
+            auto_fixable=False
+        )
+
+    # Wait for app to start (max 10 seconds)
+    port = 3000  # Default port
+    started = False
+    for _ in range(20):
+        time.sleep(0.5)
+        try:
+            import urllib.request
+            response = urllib.request.urlopen(f"http://127.0.0.1:{port}/health", timeout=1)
+            if response.status == 200:
+                started = True
+                break
+        except Exception:
+            # App not ready yet, keep waiting
+            if proc.poll() is not None:
+                # Process exited early
+                _, stderr = proc.communicate()
+                return CheckResult(
+                    name="startup",
+                    passed=False,
+                    message=f"App exited before starting:\n{stderr[:500]}",
+                    auto_fixable=False
+                )
+            continue
+
+    # Kill the app
+    proc.terminate()
+    try:
+        proc.wait(timeout=3)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+
+    if started:
+        return CheckResult(
+            name="startup",
+            passed=True,
+            message="App starts and /health responds OK"
+        )
+    else:
+        return CheckResult(
+            name="startup",
+            passed=False,
+            message=f"App did not respond to /health within 10 seconds",
+            auto_fixable=False
+        )
 
 
 def check_python(path: str) -> list[CheckResult]:
