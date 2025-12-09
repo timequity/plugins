@@ -122,9 +122,20 @@ If found:
    askama = "0.12"
    askama_axum = "0.4"
    axum-htmx = "0.6"
+   # Static files (CSS, JS)
+   tower-http = { version = "0.6", features = ["fs"] }
 
    [dev-dependencies]
    axum-test = "{latest}"
+   ```
+
+   **IMPORTANT for fullstack:** Add static file serving to Router:
+   ```rust
+   use tower_http::services::ServeDir;
+
+   Router::new()
+       // ... routes
+       .nest_service("/static", ServeDir::new("static"))
    ```
 
 7. **Create src/lib.rs with health endpoint**:
