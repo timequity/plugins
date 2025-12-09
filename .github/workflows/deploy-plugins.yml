@@ -1,0 +1,85 @@
+name: Deploy Plugins
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ccc/**'
+      - 'craft-coder/**'
+      - 'vibe-coder/**'
+      - 'manifest.toml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed plugins
+        id: changes
+        run: |
+          CHANGED_DIRS=""
+
+          # Check each plugin directory for changes
+          for dir in ccc craft-coder vibe-coder; do
+            if git diff --name-only HEAD~1 HEAD | grep -q "^${dir}/"; then
+              CHANGED_DIRS="${CHANGED_DIRS} ${dir}"
+            fi
+          done
+
+          # Also rebuild all if manifest changed
+          if git diff --name-only HEAD~1 HEAD | grep -q "^manifest.toml$"; then
+            CHANGED_DIRS="ccc craft-coder vibe-coder"
+          fi
+
+          echo "changed_dirs=${CHANGED_DIRS}" >> $GITHUB_OUTPUT
+          echo "Changed plugins: ${CHANGED_DIRS}"
+
+      - name: Create zip files
+        if: steps.changes.outputs.changed_dirs != ''
+        run: |
+          mkdir -p dist
+
+          for dir in ${{ steps.changes.outputs.changed_dirs }}; do
+            if [ -d "$dir" ]; then
+              echo "Creating ${dir}.zip..."
+              cd "$dir"
+              zip -r "../dist/${dir}.zip" . -x "*.git*" -x "*__pycache__*" -x "*.pyc"
+              cd ..
+              echo "Created dist/${dir}.zip"
+            fi
+          done
+
+          ls -la dist/
+
+      - name: Setup SSH
+        if: steps.changes.outputs.changed_dirs != ''
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H skill7.dev >> ~/.ssh/known_hosts
+
+      - name: Deploy zip files to server
+        if: steps.changes.outputs.changed_dirs != ''
+        run: |
+          for dir in ${{ steps.changes.outputs.changed_dirs }}; do
+            if [ -f "dist/${dir}.zip" ]; then
+              echo "Uploading ${dir}.zip..."
+              scp "dist/${dir}.zip" root@skill7.dev:/opt/timequity/plugins/
+            fi
+          done
+
+      - name: Deploy manifest
+        if: contains(steps.changes.outputs.changed_dirs, 'ccc') || contains(steps.changes.outputs.changed_dirs, 'craft-coder') || contains(steps.changes.outputs.changed_dirs, 'vibe-coder')
+        run: |
+          scp manifest.toml root@skill7.dev:/opt/timequity/plugins/
+
+      - name: Restart marketplace
+        if: steps.changes.outputs.changed_dirs != ''
+        run: |
+          ssh root@skill7.dev "cd /opt/timequity && pkill marketplace; rm -f data.db && nohup ./marketplace > /var/log/marketplace.log 2>&1 &"
+          sleep 3
+          ssh root@skill7.dev "pgrep -a marketplace && echo 'Marketplace restarted!'"
