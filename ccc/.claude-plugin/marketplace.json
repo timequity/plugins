@@ -1,0 +1,41 @@
+{
+  "name": "ccc",
+  "owner": {
+    "name": "timequity",
+    "email": "plugins@timequity.dev"
+  },
+  "metadata": {
+    "description": "Claude Code Course: Master Claude Code in 5 hands-on lessons. From basics to building applications.",
+    "version": "2.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ccc",
+      "source": "./",
+      "description": "Claude Code Course: Master Claude Code in 5 hands-on lessons. From basics to building applications.",
+      "version": "2.0.0",
+      "author": {
+        "name": "timequity"
+      },
+      "category": "learning",
+      "tags": ["course", "learning", "tutorial", "claude-code", "beginner"],
+      "strict": false,
+      "commands": [
+        "./commands/course.md",
+        "./commands/lesson.md",
+        "./commands/practice.md",
+        "./commands/progress.md",
+        "./commands/list.md",
+        "./commands/reset.md"
+      ],
+      "skills": [
+        "./skills/course-help",
+        "./skills/progress-manager",
+        "./skills/lessons"
+      ],
+      "agents": [
+        "./agents/tutor.md"
+      ]
+    }
+  ]
+}

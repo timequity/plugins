@@ -125,71 +125,72 @@ If triggers match multiple skills — Claude chooses the most appropriate one.
 
 ## Practice
 
-**Task:** Create a `greeting` skill that greets in a friendly way.
+Now I'll demonstrate creating a skill.
 
-**Requirements:**
-1. Path: `.claude/skills/greeting/SKILL.md`
-2. Triggers: "hello", "hi", "greet"
-3. Should respond with a friendly greeting when activated
+**Task:** Create a `code-style` skill that enforces coding standards.
 
-**Steps:**
-1. Create folder `.claude/skills/greeting/`
-2. Create `SKILL.md` file with proper structure
-3. Write instructions for Claude
-
-**Verification:**
-After creating, write "hello" — I should respond specially (according to the skill).
-
-<details>
-<summary>Hint</summary>
-
-```markdown
----
-name: greeting
-description: |
-  Greets the user.
-  Use when: user says hello.
-  Triggers: "hello", "hi", "greet".
----
-
-# Greeting
-
-When user greets:
-- Respond friendly
-- Ask how you can help
-- Use their name if known
-```
-
-</details>
-
-When done, say "done" and I'll verify the result.
+**Watch me do it:**
 
 ---
 
-## Practice Verification
+## Practice Execution
 
-When user says "done", run verification:
+**IMPORTANT:** As the tutor, YOU (Claude) must execute this practice, not the user.
+
+1. Create the skill directory and file:
 
 ```bash
-# Lesson 2 check
-SKILL_FILE=".claude/skills/greeting/SKILL.md"
-if [ -f "$SKILL_FILE" ]; then
-  # Check frontmatter
-  if head -20 "$SKILL_FILE" | grep -q "^name:" && \
-     head -20 "$SKILL_FILE" | grep -q "^description:"; then
-    echo "✓ Skill created with proper structure!"
-  else
-    echo "✗ File exists but missing frontmatter (name/description)"
-  fi
-else
-  echo "✗ File .claude/skills/greeting/SKILL.md not found"
-fi
+mkdir -p .claude/skills/code-style
+cat > .claude/skills/code-style/SKILL.md << 'EOF'
+---
+name: code-style
+description: |
+  Enforces coding style guidelines.
+  Use when: reviewing or writing code.
+  Triggers: "code style", "lint", "format", "clean up code".
+---
+
+# Code Style Guide
+
+When writing or reviewing code:
+
+## Rules
+- Use 2-space indentation
+- Prefer const over let
+- Use descriptive variable names
+- Add comments for complex logic
+
+## Example
+```js
+// Good
+const getUserById = async (id) => {
+  const user = await db.users.find(id);
+  return user;
+};
+```
+EOF
 ```
 
-**On success:**
-- Update progress: `practice_completed: true`
-- Show congratulations and suggest moving to lesson 3
+2. Show the user what was created:
+```bash
+cat .claude/skills/code-style/SKILL.md
+```
 
-**On failure:**
-- Explain what's wrong (path? structure?)
-- Show example of correct frontmatter
+3. Explain and congratulate:
+```
+✓ Practice completed!
+
+I created a skill at .claude/skills/code-style/SKILL.md
+
+Key parts:
+- Frontmatter (---) with name, description, triggers
+- Instructions that Claude follows when skill activates
+
+Now when you say "check code style", this skill guides my response.
+
+Ready for Lesson 3? Type `/ccc:lesson 3` or say "next"
+```
+
+**After execution:**
+- Update progress: `practice_completed: true`, `current_lesson: 3`
+- Clean up: `rm -rf .claude/skills/code-style` (demo only)

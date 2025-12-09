@@ -5,10 +5,10 @@ Opens lesson by number.
 ## Syntax
 
 ```
-/course lesson 1
-/course lesson 2
+/ccc:lesson 1
+/ccc:lesson 2
 ...
-/course lesson 5
+/ccc:lesson 5
 ```
 
 ## Algorithm
@@ -56,7 +56,7 @@ After showing theory:
 
 Theory complete! Now for practice.
 
-Type `/course practice` to start the hands-on task.
+Type `/ccc:practice` to start the hands-on task.
 ```
 
 And update `theory_read: true`.

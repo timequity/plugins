@@ -1,14 +1,14 @@
 ---
-name: lessons-en
+name: lessons
 description: |
-  English lesson content for Claude Code Course.
-  Use when: loading lesson content in English.
+  Lesson content for Claude Code Course.
+  Use when: loading lesson content.
   Internal skill - contains lesson files.
 ---
 
-# English Lessons
+# Course Lessons
 
-This skill contains English lesson content.
+This skill contains lesson content for the Claude Code Course.
 
 ## Files
 

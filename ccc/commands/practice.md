@@ -1,11 +1,11 @@
-# /course practice — Practice Task
+# /ccc:practice — Practice Task
 
 Starts practice for current lesson.
 
 ## Syntax
 
 ```
-/course practice
+/ccc:practice
 ```
 
 ## Algorithm
@@ -20,7 +20,7 @@ If `theory_read: false` for current lesson:
 ```
 First read the lesson {N} theory.
 
-Type `/course lesson {N}` to read the material.
+Type `/ccc:lesson {N}` to read the material.
 ```
 
 ### 3. Show Task
@@ -89,7 +89,7 @@ You learned:
 
 Progress: ████████░░░░░░░░░░░░ {X}/5
 
-Ready for next lesson? Type `/course lesson {N+1}`
+Ready for next lesson? Type `/ccc:lesson {N+1}`
 ```
 
 ### 8. Final Lesson Completion

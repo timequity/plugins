@@ -1,11 +1,11 @@
-# /course:reset — Reset Progress
+# /ccc:course:reset — Reset Progress
 
 Deletes all progress and starts course from scratch.
 
 ## Syntax
 
 ```
-/course:reset
+/ccc:course:reset
 ```
 
 ## Algorithm
@@ -33,7 +33,7 @@ And show:
 ```
 Progress reset.
 
-Ready to start over? Type `/course`
+Ready to start over? Type `/ccc:course`
 ```
 
 ### 3. On Cancel
@@ -42,7 +42,7 @@ Ready to start over? Type `/course`
 Reset cancelled. Your progress is saved.
 
 Current lesson: {N}
-Continue: `/course`
+Continue: `/ccc:course`
 ```
 
 ## Important

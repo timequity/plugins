@@ -1,16 +1,16 @@
-# /course — Main Course Command
+# /ccc:course — Main Course Command
 
 Command to start and continue the Claude Code course.
 
 ## Argument Handling
 
 If user entered:
-- `/course` — show progress and continue
-- `/course lesson N` — go to lesson N
-- `/course practice` — start practice for current lesson
-- `/course progress` — detailed progress
-- `/course reset` — reset progress
-- `/course help` — show help
+- `/ccc:course` — show progress and continue
+- `/ccc:lesson N` — go to lesson N
+- `/ccc:practice` — start practice for current lesson
+- `/ccc:progress` — detailed progress
+- `/ccc:reset` — reset progress
+- `/ccc:help` — show help
 
 ## Algorithm
 
@@ -46,7 +46,7 @@ Master Claude Code in 5 practical lessons — from basics to building a full app
 | 4 | Hooks and Automation | ~20 min |
 | 5 | Building an Application | ~30 min |
 
-Ready to start? Say "yes" or type `/course lesson 1`
+Ready to start? Say "yes" or type `/ccc:lesson 1`
 ```
 
 **Continuing user** (has progress):
@@ -89,7 +89,7 @@ Formula: for each lesson with `practice_completed: true` — one filled block.
 
 If user confirms:
 1. Update progress: set `started_at` for current lesson
-2. Redirect to `/course lesson N` where N = current_lesson
+2. Redirect to `/ccc:lesson N` where N = current_lesson
 
 ## Auto-save Progress
 
@@ -125,11 +125,11 @@ PROGRESS
 
 ## Examples
 
-**User**: `/course`
+**User**: `/ccc:course`
 **Response** (new): Show welcome with lessons table
 
-**User**: `/course`
+**User**: `/ccc:course`
 **Response** (continuing): Show progress bar and suggest continuing
 
-**User**: `/course reset`
+**User**: `/ccc:reset`
 **Response**: "Progress reset. Start over?" + delete progress file

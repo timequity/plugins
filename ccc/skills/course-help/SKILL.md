@@ -24,11 +24,11 @@ Interactive course to master Claude Code in 5 hands-on lessons.
 
 | Command | Description |
 |---------|-------------|
-| `/course` | Start or continue the course |
-| `/course lesson 1` | Go to specific lesson |
-| `/course practice` | Practice current lesson |
-| `/course progress` | Show your progress |
-| `/course reset` | Reset progress and start over |
+| `/ccc:course` | Start or continue the course |
+| `/ccc:lesson 1` | Go to specific lesson |
+| `/ccc:practice` | Practice current lesson |
+| `/ccc:progress` | Show your progress |
+| `/ccc:reset` | Reset progress and start over |
 
 ## How It Works
 

@@ -1,11 +1,11 @@
-# /course progress — Detailed Progress
+# /ccc:progress — Detailed Progress
 
 Shows detailed course completion statistics.
 
 ## Syntax
 
 ```
-/course progress
+/ccc:progress
 ```
 
 ## Algorithm
@@ -49,7 +49,7 @@ Status: ○ Not started
 ## What's Next?
 
 Continue lesson 2 — practice remaining.
-`/course practice` — complete task
+`/ccc:practice` — complete task
 ```
 
 ### 3. Time Calculation
@@ -65,7 +65,7 @@ Approximate time:
 
 You haven't started the course yet.
 
-Type `/course` to begin learning!
+Type `/ccc:course` to begin learning!
 ```
 
 ### 5. If Course Completed

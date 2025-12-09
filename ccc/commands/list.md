@@ -1,11 +1,11 @@
-# /course:list — List All Lessons
+# /ccc:list — List All Lessons
 
 Shows all lessons with completion statuses.
 
 ## Syntax
 
 ```
-/course:list
+/ccc:list
 ```
 
 ## Algorithm
@@ -32,7 +32,7 @@ cat "$HOME/.claude-course/progress.json" 2>/dev/null || echo '{}'
 **Legend:** ✓ completed • ● in progress • ○ not started
 
 Current: Lesson 2
-Command: `/course lesson 2` to continue
+Command: `/ccc:lesson 2` to continue
 ```
 
 ### 3. Statuses
@@ -56,5 +56,5 @@ Command: `/course lesson 2` to continue
 | 4 | Hooks and Automation | ~20 min | ○ |
 | 5 | Building an Application | ~30 min | ○ |
 
-Start course: `/course`
+Start course: `/ccc:course`
 ```

@@ -191,76 +191,133 @@ Try:
 
 ## Practice
 
-**Task:** Create a Todo project structure with a style skill.
+Now I'll demonstrate putting everything together.
 
-**Minimum Requirements:**
-1. Folder `todo-app/` with files `index.html`, `style.css`, `app.js`
-2. Skill `todo-app/.claude/skills/todo-style/SKILL.md`
+**Task:** Create a mini todo-app with a skill.
 
-**Steps:**
-1. Ask Claude to create project structure
-2. Create style skill (use knowledge from lesson 2)
-3. Ask Claude to add basic HTML and CSS
-
-**Bonus (optional):**
-- Add logic agent
-- Configure formatting hook
-- Deploy to GitHub Pages
+**Watch me do it:**
 
 ---
 
-## Congratulations!
+## Practice Execution
 
-You've completed the entire Claude Code course!
+**IMPORTANT:** As the tutor, YOU (Claude) must execute this practice, not the user.
 
-```
-████████████████████ 100%
-```
-
-**Now you know how to:**
-- Communicate effectively with Claude
-- Create skills for repeating tasks
-- Use agents for complex work
-- Automate routine with hooks
-- Build applications with Claude Code
-
----
-
-## What's Next?
-
-1. **Create your own plugin** — share skills with community
-2. **Explore other plugins** — see what others have created
-3. **Experiment** — try new combinations of skills and agents
-
----
-
-Thanks for taking the course! Good luck programming with Claude!
-
----
-
-## Practice Verification
-
-When user says "done", run verification:
+1. Create the project structure:
 
 ```bash
-# Lesson 5 check
-if [ -d "todo-app" ] && \
-   [ -f "todo-app/index.html" ] && \
-   [ -f "todo-app/.claude/skills/todo-style/SKILL.md" ]; then
-  echo "✓ Project created with proper structure!"
-else
-  echo "✗ Check structure:"
-  echo "  - todo-app/index.html"
-  echo "  - todo-app/style.css"
-  echo "  - todo-app/app.js"
-  echo "  - todo-app/.claude/skills/todo-style/SKILL.md"
-fi
+mkdir -p todo-demo/.claude/skills/todo-style
 ```
 
-**On success:**
-- Update progress: `practice_completed: true`, `completed: true`
-- Show final congratulations with 100% progress bar
+2. Create the HTML:
 
-**On failure:**
-- Show which files are missing
-- Suggest creating missing ones
+```bash
+cat > todo-demo/index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>My Todos</h1>
+    <input type="text" id="input" placeholder="Add a task...">
+    <button onclick="addTodo()">Add</button>
+    <ul id="list"></ul>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+EOF
+```
+
+3. Create the CSS:
+
+```bash
+cat > todo-demo/style.css << 'EOF'
+body { font-family: system-ui; max-width: 400px; margin: 50px auto; }
+.container { padding: 20px; }
+input { padding: 8px; width: 70%; }
+button { padding: 8px 16px; }
+ul { list-style: none; padding: 0; }
+li { padding: 10px; margin: 5px 0; background: #f5f5f5; border-radius: 4px; }
+EOF
+```
+
+4. Create the JavaScript:
+
+```bash
+cat > todo-demo/app.js << 'EOF'
+const todos = [];
+function addTodo() {
+  const input = document.getElementById('input');
+  if (input.value) {
+    todos.push(input.value);
+    render();
+    input.value = '';
+  }
+}
+function render() {
+  const list = document.getElementById('list');
+  list.innerHTML = todos.map(t => `<li>${t}</li>`).join('');
+}
+EOF
+```
+
+5. Create the style skill:
+
+```bash
+cat > todo-demo/.claude/skills/todo-style/SKILL.md << 'EOF'
+---
+name: todo-style
+description: |
+  Style guide for todo app.
+  Use when: modifying styles.
+  Triggers: "style", "css", "design".
+---
+
+# Todo App Styles
+
+- Background: #f5f5f5
+- Accent: #4CAF50
+- Border radius: 4px
+- Font: system-ui
+EOF
+```
+
+6. Show what was created:
+
+```bash
+find todo-demo -type f
+```
+
+7. Congratulate:
+
+```
+✓ Course completed!
+
+████████████████████ 100%
+
+I created a mini todo app with:
+- index.html — structure
+- style.css — styling
+- app.js — functionality
+- .claude/skills/todo-style/SKILL.md — style guide
+
+You've learned:
+- Claude Code basics
+- Creating skills
+- Creating agents
+- Setting up hooks
+- Putting it all together
+
+What's next?
+- Build your own project with Claude
+- Create custom skills for your workflow
+- Share your plugins with the community
+```
+
+**After execution:**
+- Update progress: `practice_completed: true`, `completed: true`
+- Clean up: `rm -rf todo-demo` (demo only)

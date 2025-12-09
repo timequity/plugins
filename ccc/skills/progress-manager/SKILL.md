@@ -3,7 +3,7 @@ name: progress-manager
 description: |
   Manages course progress tracking in ~/.claude-course/progress.json.
   Use when: loading, saving, or displaying course progress.
-  Internal skill - used by /course commands.
+  Internal skill - used by /ccc:course commands.
 ---
 
 # Progress Manager
@@ -128,8 +128,8 @@ When lesson 5 practice is completed:
 ## Integration
 
 Used by:
-- `/course` — Show current progress, continue
-- `/course progress` — Detailed progress view
-- `/course lesson N` — Update current lesson
-- `/course practice` — Track practice attempts
-- `/course reset` — Clear all progress
+- `/ccc:course` — Show current progress, continue
+- `/ccc:progress` — Detailed progress view
+- `/ccc:lesson N` — Update current lesson
+- `/ccc:practice` — Track practice attempts
+- `/ccc:reset` — Clear all progress

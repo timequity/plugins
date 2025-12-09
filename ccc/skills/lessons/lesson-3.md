@@ -149,85 +149,73 @@ You don't run agents directly — Claude decides when to use them based on descr
 
 ## Practice
 
-**Task:** Create a `file-counter` agent that counts files in the project.
+Now I'll demonstrate creating an agent.
 
-**Requirements:**
-1. Path: `.claude/agents/file-counter.md`
-2. Tools: Glob, Bash
-3. Model: haiku (simple task)
-4. Task: count files by type (.js, .ts, .md, etc.)
+**Task:** Create a `code-explorer` agent that finds and summarizes code.
 
-**Steps:**
-1. Create file `.claude/agents/file-counter.md`
-2. Add proper frontmatter
-3. Write instructions for counting files
+**Watch me do it:**
 
-**Verification:**
-After creating, ask "count files in project" — I should delegate to your agent.
-
-<details>
-<summary>Hint</summary>
-
-```markdown
 ---
-name: file-counter
-description: Counts files in project by type.
+
+## Practice Execution
+
+**IMPORTANT:** As the tutor, YOU (Claude) must execute this practice, not the user.
+
+1. Create the agent file:
+
+```bash
+mkdir -p .claude/agents
+cat > .claude/agents/code-explorer.md << 'EOF'
+---
+name: code-explorer
+description: Explores codebase and answers questions about it.
 tools:
   - Glob
-  - Bash
+  - Grep
+  - Read
 model: haiku
 ---
 
-# File Counter Agent
+# Code Explorer Agent
 
-Count files in the project by extension.
+You are a code exploration assistant.
 
-## Algorithm
+## Instructions
 
-1. Use Glob with pattern `**/*` to get all files
-2. Group by extension
-3. Output table:
+1. Use Glob to find relevant files
+2. Use Grep to search for patterns
+3. Use Read to examine file contents
+4. Summarize findings concisely
 
-| Type | Count |
-|------|-------|
-| .ts | 45 |
-| .md | 12 |
-| ... | ... |
+## Response Format
 
-4. Show total count
+- List relevant files found
+- Brief description of each
+- Answer the user's question
+EOF
 ```
 
-</details>
-
-When done, say "done" and I'll verify the result.
-
----
-
-## Practice Verification
-
-When user says "done", run verification:
-
+2. Show the user what was created:
 ```bash
-# Lesson 3 check
-AGENT_FILE=".claude/agents/file-counter.md"
-if [ -f "$AGENT_FILE" ]; then
-  # Check required frontmatter fields
-  if head -20 "$AGENT_FILE" | grep -q "^name:" && \
-     head -20 "$AGENT_FILE" | grep -q "^tools:" && \
-     head -20 "$AGENT_FILE" | grep -q "^model:"; then
-    echo "✓ Agent created with proper structure!"
-  else
-    echo "✗ File exists but missing frontmatter (name/tools/model)"
-  fi
-else
-  echo "✗ File .claude/agents/file-counter.md not found"
-fi
+cat .claude/agents/code-explorer.md
 ```
 
-**On success:**
-- Update progress: `practice_completed: true`
-- Show congratulations and suggest moving to lesson 4
+3. Explain and congratulate:
+```
+✓ Practice completed!
 
-**On failure:**
-- Explain what's wrong
-- Remind required fields: name, tools, model
+I created an agent at .claude/agents/code-explorer.md
+
+Key differences from skills:
+- Has `tools:` — what the agent can use
+- Has `model:` — which AI model runs it
+- Runs as separate process, can work in parallel
+
+Agents are for autonomous, multi-step tasks.
+
+Ready for Lesson 4? Type `/ccc:lesson 4` or say "next"
+```
+
+**After execution:**
+- Update progress: `practice_completed: true`, `current_lesson: 4`
+- Clean up: `rm -rf .claude/agents/code-explorer.md` (demo only)

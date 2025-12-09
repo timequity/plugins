@@ -189,72 +189,64 @@ Use for:
 
 ## Practice
 
-**Task:** Create a hook that shows notification after file creation.
+Now I'll demonstrate creating a hook.
 
-**Requirements:**
-1. Type: PostToolUse
-2. Matcher: Write
-3. Command: `echo "Created file: $CLAUDE_FILE_PATH"`
+**Task:** Create a hook that logs when files are edited.
 
-**Steps:**
-1. Create or edit `.claude/settings.json`
-2. Add hooks section
-3. Configure PostToolUse for Write
+**Watch me do it:**
 
-**Verification:**
-After creating, ask me to create any file — a message should appear.
+---
 
-<details>
-<summary>Hint</summary>
+## Practice Execution
 
-```json
+**IMPORTANT:** As the tutor, YOU (Claude) must execute this practice, not the user.
+
+1. Create the settings file with hook:
+
+```bash
+mkdir -p .claude
+cat > .claude/settings.json << 'EOF'
 {
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write",
+        "matcher": "Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "echo \"✓ Created file: $CLAUDE_FILE_PATH\""
+            "command": "echo \"[$(date +%H:%M:%S)] Edited: $CLAUDE_FILE_PATH\" >> .claude/edit.log"
           }
         ]
       }
     ]
   }
 }
+EOF
 ```
 
-</details>
-
-When done, say "done" and I'll verify the result.
-
----
-
-## Practice Verification
-
-When user says "done", run verification:
-
+2. Show the user what was created:
 ```bash
-# Lesson 4 check
-SETTINGS_FILE=".claude/settings.json"
-if [ -f "$SETTINGS_FILE" ]; then
-  # Check for hooks section
-  if grep -q '"hooks"' "$SETTINGS_FILE" && \
-     grep -q '"PostToolUse"' "$SETTINGS_FILE"; then
-    echo "✓ Hooks configured!"
-  else
-    echo "✗ File exists but missing hooks/PostToolUse section"
-  fi
-else
-  echo "✗ File .claude/settings.json not found"
-fi
+cat .claude/settings.json
 ```
 
-**On success:**
-- Update progress: `practice_completed: true`
-- Show congratulations and suggest moving to lesson 5
+3. Explain and congratulate:
+```
+✓ Practice completed!
 
-**On failure:**
-- Explain settings.json structure
-- Show minimal example with hooks
+I created a hook in .claude/settings.json
+
+This hook:
+- Triggers after every Edit operation
+- Logs the file path and timestamp to .claude/edit.log
+
+Hook structure:
+- matcher: which tool triggers it (Edit, Write, Bash, *)
+- type: "command" to run shell commands
+- command: what to execute
+
+Ready for Lesson 5? Type `/ccc:lesson 5` or say "next"
+```
+
+**After execution:**
+- Update progress: `practice_completed: true`, `current_lesson: 5`
+- Clean up: `rm -rf .claude/settings.json .claude/edit.log` (demo only)

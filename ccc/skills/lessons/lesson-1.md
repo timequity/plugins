@@ -111,37 +111,57 @@ Claude can make mistakes. Always check what it did:
 
 ## Practice
 
-Your turn!
+Now I'll demonstrate what you learned by creating a file.
 
-**Task:** Create a file `hello.txt` in the current directory with the text "Hello from Claude!"
+**Task:** Create a CLAUDE.md file for a sample project.
 
-**How to do it:**
-1. Ask Claude to create the file
-2. Verify it was created (`ls` or `cat hello.txt`)
+**Watch me do it:**
 
-**Hint:** Just write "Create a file hello.txt with text Hello from Claude!"
-
-When done, say "done" and I'll verify the result.
+```
+I'll create a CLAUDE.md file that describes a hypothetical project.
+This shows how Claude Code can create files through conversation.
+```
 
 ---
 
-## Practice Verification
+## Practice Execution
 
-When user says "done", run verification:
+**IMPORTANT:** As the tutor, YOU (Claude) must execute this practice, not the user.
+
+1. Create the file:
 
 ```bash
-# Lesson 1 check
-if [ -f "hello.txt" ] && grep -q "Hello" hello.txt; then
-  echo "✓ Practice completed!"
-else
-  echo "✗ File hello.txt not found or doesn't contain greeting"
-fi
+cat > CLAUDE.md << 'EOF'
+# CLAUDE.md
+
+## Project
+A simple CLI todo app for learning Claude Code.
+
+## Stack
+- Node.js
+- SQLite for storage
+
+## Commands
+- `npm start` — run the app
+- `npm test` — run tests
+EOF
 ```
 
-**On success:**
-- Update progress: `practice_completed: true`
-- Show congratulations and suggest moving to lesson 2
+2. Show the user what was created:
+```bash
+cat CLAUDE.md
+```
 
-**On failure:**
-- Explain what's wrong
-- Suggest trying again
+3. Update progress and congratulate:
+```
+✓ Practice completed!
+
+I just created a CLAUDE.md file. This is how you describe projects to Claude.
+Key sections: Project (what it is), Stack (technologies), Commands (how to run).
+
+Ready for Lesson 2? Type `/ccc:lesson 2` or just say "next"
+```
+
+**After execution:**
+- Update progress: `practice_completed: true`, `current_lesson: 2`
+- Clean up: `rm CLAUDE.md` (it was just a demo)
