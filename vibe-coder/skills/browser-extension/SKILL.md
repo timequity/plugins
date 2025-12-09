@@ -8,6 +8,52 @@ description: |
 
 # Browser Extension Development
 
+## Project Protection Setup
+
+**MANDATORY before writing any code:**
+
+```bash
+# 1. Create .gitignore
+cat >> .gitignore << 'EOF'
+# Build
+dist/
+node_modules/
+*.zip
+
+# Secrets
+.env
+api_keys.js
+config.local.ts
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Extension artifacts
+*.crx
+*.pem
+EOF
+
+# 2. Setup pre-commit hooks
+cat > .pre-commit-config.yaml << 'EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+EOF
+
+pre-commit install
+```
+
+---
+
 ## Overview
 
 Browser extensions extend browser functionality using web technologies (HTML, CSS, JS/TS).
@@ -476,11 +522,109 @@ const browser = await puppeteer.launch({
 
 ---
 
+## Testing
+
+### Unit Tests (Vitest)
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock chrome API
+const chrome = {
+  storage: {
+    sync: {
+      get: vi.fn(),
+      set: vi.fn(),
+    },
+  },
+  runtime: {
+    sendMessage: vi.fn(),
+  },
+};
+global.chrome = chrome;
+
+describe('Storage helpers', () => {
+  it('saves settings', async () => {
+    await saveSettings({ enabled: true });
+    expect(chrome.storage.sync.set).toHaveBeenCalledWith({ enabled: true });
+  });
+
+  it('loads settings with defaults', async () => {
+    chrome.storage.sync.get.mockResolvedValue({});
+    const settings = await loadSettings();
+    expect(settings.enabled).toBe(true); // default
+  });
+});
+
+describe('Content script', () => {
+  it('highlights elements', () => {
+    document.body.innerHTML = '<div class="target">Test</div>';
+    highlightTargets();
+    expect(document.querySelector('.target')?.style.backgroundColor).toBe('yellow');
+  });
+});
+```
+
+### Integration Tests (Puppeteer)
+
+```typescript
+import puppeteer from 'puppeteer';
+
+describe('Extension E2E', () => {
+  let browser;
+
+  beforeAll(async () => {
+    browser = await puppeteer.launch({
+      headless: false,
+      args: [
+        `--disable-extensions-except=${extensionPath}`,
+        `--load-extension=${extensionPath}`,
+      ],
+    });
+  });
+
+  it('popup opens', async () => {
+    const page = await browser.newPage();
+    await page.goto(`chrome-extension://${extensionId}/popup/popup.html`);
+    const title = await page.$eval('h1', el => el.textContent);
+    expect(title).toBe('My Extension');
+  });
+
+  afterAll(async () => {
+    await browser.close();
+  });
+});
+```
+
+---
+
+## TDD Workflow
+
+```
+1. Task[tdd-test-writer]: "Create settings storage"
+   → Writes test for save/load settings
+   → npm test → FAILS (RED)
+
+2. Task[rust-developer]: "Implement storage helpers"
+   → Implements with chrome.storage API
+   → npm test → PASSES (GREEN)
+
+3. Repeat for each feature
+
+4. Task[code-reviewer]: "Review extension"
+   → Checks permissions, CSP, security
+```
+
+---
+
 ## Security Checklist
 
-- [ ] Minimal permissions
+- [ ] Minimal permissions (request only what's needed)
 - [ ] No `eval()` or inline scripts
 - [ ] Validate all external data
 - [ ] Use HTTPS only
-- [ ] Content Security Policy
-- [ ] No sensitive data in storage.sync
+- [ ] Content Security Policy defined
+- [ ] No sensitive data in storage.sync (visible across devices)
+- [ ] No API keys in source (use environment or user input)
+- [ ] Input sanitization in content scripts
+- [ ] pre-commit hooks with gitleaks

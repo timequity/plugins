@@ -8,6 +8,53 @@ description: |
 
 # Discord Bot Development
 
+## Project Protection Setup
+
+**MANDATORY before writing any code:**
+
+```bash
+# 1. Create .gitignore
+cat >> .gitignore << 'EOF'
+# Build
+target/
+node_modules/
+__pycache__/
+dist/
+
+# Secrets - CRITICAL for bots!
+.env
+.env.*
+!.env.example
+bot_token.txt
+config.json  # If contains token
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+EOF
+
+# 2. Setup pre-commit hooks
+cat > .pre-commit-config.yaml << 'EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+EOF
+
+pre-commit install
+```
+
+**Why critical:** Discord bot tokens give FULL access. Leaked token = bot compromised, can spam users.
+
+---
+
 ## Stack Options
 
 | Language | Framework | Best For |
@@ -385,6 +432,108 @@ https://discord.com/api/oauth2/authorize?client_id=YOUR_ID&permissions=PERMS&sco
 
 ---
 
+## Testing
+
+### Rust (serenity/poise)
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_duration() {
+        assert_eq!(parse_duration("1h"), Duration::hours(1));
+        assert_eq!(parse_duration("30m"), Duration::minutes(30));
+    }
+
+    #[tokio::test]
+    async fn test_ban_requires_permission() {
+        // Test permission checks
+        let result = check_ban_permission(user_without_perms).await;
+        assert!(result.is_err());
+    }
+}
+```
+
+### Python (discord.py)
+
+```python
+import pytest
+from unittest.mock import AsyncMock, MagicMock
+
+@pytest.fixture
+def mock_interaction():
+    interaction = MagicMock()
+    interaction.response.send_message = AsyncMock()
+    interaction.user.guild_permissions.ban_members = True
+    return interaction
+
+@pytest.mark.asyncio
+async def test_hello_command(mock_interaction):
+    await hello(mock_interaction)
+    mock_interaction.response.send_message.assert_called_once()
+
+@pytest.mark.asyncio
+async def test_ban_without_permission(mock_interaction):
+    mock_interaction.user.guild_permissions.ban_members = False
+    with pytest.raises(discord.errors.Forbidden):
+        await ban(mock_interaction, MagicMock())
+```
+
+### Node (discord.js)
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+
+describe('Commands', () => {
+  it('hello command replies', async () => {
+    const interaction = {
+      reply: vi.fn(),
+      isChatInputCommand: () => true,
+      commandName: 'hello',
+    };
+
+    await handleInteraction(interaction);
+    expect(interaction.reply).toHaveBeenCalled();
+  });
+});
+```
+
+---
+
+## TDD Workflow
+
+```
+1. Task[tdd-test-writer]: "Create /ban slash command"
+   → Writes test expecting permission check + success
+   → cargo test / pytest / npm test → FAILS (RED)
+
+2. Task[rust-developer]: "Implement /ban command"
+   → Implements with permission checks
+   → Tests PASS (GREEN)
+
+3. Repeat for each command
+
+4. Task[code-reviewer]: "Review bot implementation"
+   → Checks security, permissions, rate limits
+```
+
+---
+
+## Security Checklist
+
+- [ ] Token in environment variable (never in code)
+- [ ] `.env` in `.gitignore`
+- [ ] pre-commit hooks with gitleaks
+- [ ] Permission checks on all moderation commands
+- [ ] Rate limiting for user commands
+- [ ] Input sanitization (no injection in embeds)
+- [ ] No privileged intents unless needed
+- [ ] Audit log for moderation actions
+
+---
+
 ## Project Structure
 
 ```
@@ -396,6 +545,10 @@ discord-bot/
 │   │   ├── moderation.rs
 │   │   └── fun.rs
 │   └── events.rs
+├── tests/
+│   └── commands_test.rs
 ├── Cargo.toml
-└── .env
+├── .env.example
+├── .env              # NOT committed
+└── .gitignore
 ```

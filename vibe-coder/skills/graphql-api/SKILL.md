@@ -8,6 +8,50 @@ description: |
 
 # GraphQL API Development
 
+## Project Protection Setup
+
+**MANDATORY before writing any code:**
+
+```bash
+# 1. Create .gitignore
+cat >> .gitignore << 'EOF'
+# Build
+target/
+node_modules/
+__pycache__/
+dist/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+EOF
+
+# 2. Setup pre-commit hooks
+cat > .pre-commit-config.yaml << 'EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+EOF
+
+pre-commit install
+```
+
+---
+
 ## Stack Options
 
 | Language | Framework | Best For |
@@ -446,6 +490,141 @@ let schema = Schema::build(Query, Mutation, Subscription)
 
 ---
 
+## Testing
+
+### Rust (async-graphql)
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_hello_query() {
+        let schema = Schema::build(Query, EmptyMutation, EmptySubscription).finish();
+
+        let result = schema
+            .execute(r#"{ hello(name: "Test") }"#)
+            .await;
+
+        assert!(result.errors.is_empty());
+        assert_eq!(
+            result.data,
+            async_graphql::Value::from_json(serde_json::json!({
+                "hello": "Hello, Test!"
+            })).unwrap()
+        );
+    }
+
+    #[tokio::test]
+    async fn test_create_user_mutation() {
+        let schema = create_test_schema().await;
+
+        let result = schema.execute(r#"
+            mutation {
+                createUser(input: { name: "Test", email: "test@example.com" }) {
+                    id
+                    name
+                }
+            }
+        "#).await;
+
+        assert!(result.errors.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_unauthorized_mutation_fails() {
+        let schema = create_schema_without_auth().await;
+
+        let result = schema.execute(r#"
+            mutation { deleteUser(id: "1") }
+        "#).await;
+
+        assert!(!result.errors.is_empty());
+        assert!(result.errors[0].message.contains("Unauthorized"));
+    }
+}
+```
+
+### Python (strawberry)
+
+```python
+import pytest
+from strawberry.test import GraphQLTestClient
+
+@pytest.fixture
+def client(app):
+    return GraphQLTestClient(app)
+
+def test_hello_query(client):
+    response = client.query('{ hello(name: "Test") }')
+    assert response.data == {"hello": "Hello, Test!"}
+
+def test_create_user(client):
+    response = client.query('''
+        mutation {
+            createUser(input: { name: "Test", email: "test@example.com" }) {
+                id
+                name
+            }
+        }
+    ''')
+    assert response.errors is None
+    assert response.data["createUser"]["name"] == "Test"
+```
+
+### Node (Apollo)
+
+```typescript
+import { ApolloServer } from '@apollo/server';
+import { describe, it, expect } from 'vitest';
+
+describe('GraphQL API', () => {
+  it('hello query', async () => {
+    const server = new ApolloServer({ typeDefs, resolvers });
+    const response = await server.executeOperation({
+      query: '{ hello(name: "Test") }',
+    });
+
+    expect(response.body.singleResult.data).toEqual({ hello: 'Hello, Test!' });
+  });
+});
+```
+
+---
+
+## TDD Workflow
+
+```
+1. Task[tdd-test-writer]: "Create users query"
+   → Writes test with expected response
+   → cargo test → FAILS (RED)
+
+2. Task[rust-developer]: "Implement users resolver"
+   → Implements with DataLoader
+   → cargo test → PASSES (GREEN)
+
+3. Repeat for each query/mutation
+
+4. Task[code-reviewer]: "Review GraphQL implementation"
+   → Checks N+1, auth, complexity limits
+```
+
+---
+
+## Security Checklist
+
+- [ ] Query complexity limits set
+- [ ] Query depth limits set
+- [ ] Authentication on mutations
+- [ ] Authorization per field (if needed)
+- [ ] No sensitive data in error messages
+- [ ] Rate limiting enabled
+- [ ] Introspection disabled in production
+- [ ] Input validation on all arguments
+
+---
+
 ## Project Structure
 
 ```
@@ -462,6 +641,9 @@ graphql-api/
 │   │   └── user.rs
 │   ├── loaders/       # DataLoaders
 │   └── auth.rs
+├── tests/
+│   └── schema_tests.rs
 ├── Cargo.toml
+├── .env.example
 └── schema.graphql     # SDL (optional)
 ```

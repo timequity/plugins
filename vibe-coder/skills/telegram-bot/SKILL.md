@@ -8,6 +8,54 @@ description: |
 
 # Telegram Bot Development
 
+## Project Protection Setup
+
+**MANDATORY before writing any code:**
+
+```bash
+# 1. Create .gitignore
+cat >> .gitignore << 'EOF'
+# Build
+target/
+node_modules/
+__pycache__/
+*.pyc
+dist/
+
+# Secrets - CRITICAL for bots!
+.env
+.env.*
+!.env.example
+*.key
+bot_token.txt
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+EOF
+
+# 2. Setup pre-commit hooks
+cat > .pre-commit-config.yaml << 'EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+EOF
+
+pre-commit install
+```
+
+**Why critical for bots:** Bot tokens give FULL access to your bot. Leaked token = compromised bot.
+
+---
+
 ## Stack Options
 
 | Language | Framework | Best For |
@@ -366,6 +414,112 @@ DATABASE_URL=sqlite:bot.db
 
 ---
 
+## Testing
+
+### Rust (teloxide)
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Unit test for message processing logic
+    #[test]
+    fn test_parse_command() {
+        let result = parse_expense("/add 100 food");
+        assert_eq!(result.amount, 100.0);
+        assert_eq!(result.category, "food");
+    }
+
+    // Integration test with mock bot
+    #[tokio::test]
+    async fn test_start_command_returns_welcome() {
+        // Use teloxide_tests or mock the bot
+        let response = handle_start_command().await;
+        assert!(response.contains("Welcome"));
+    }
+}
+```
+
+### Python (aiogram)
+
+```python
+import pytest
+from unittest.mock import AsyncMock, MagicMock
+
+@pytest.fixture
+def mock_message():
+    message = MagicMock()
+    message.answer = AsyncMock()
+    message.text = "/start"
+    message.from_user.id = 123
+    return message
+
+@pytest.mark.asyncio
+async def test_start_handler(mock_message):
+    await cmd_start(mock_message)
+    mock_message.answer.assert_called_once()
+    assert "Welcome" in mock_message.answer.call_args[0][0]
+
+@pytest.mark.asyncio
+async def test_fsm_state_transition(mock_message, state):
+    await start_registration(mock_message, state)
+    current_state = await state.get_state()
+    assert current_state == Form.name
+```
+
+### Node (grammY)
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+
+describe('Bot handlers', () => {
+  it('responds to /start', async () => {
+    const ctx = {
+      reply: vi.fn(),
+      message: { text: '/start' },
+    };
+
+    await startHandler(ctx);
+    expect(ctx.reply).toHaveBeenCalledWith(expect.stringContaining('Welcome'));
+  });
+});
+```
+
+---
+
+## TDD Workflow
+
+```
+1. Task[tdd-test-writer]: "Create /start command handler"
+   → Writes test that expects welcome message
+   → cargo test / pytest / npm test → FAILS (RED)
+
+2. Task[rust-developer]: "Implement /start handler"
+   → Implements minimal code
+   → cargo test → PASSES (GREEN)
+
+3. Repeat for each command/feature
+
+4. Task[code-reviewer]: "Review bot implementation"
+   → Checks security, error handling, patterns
+```
+
+---
+
+## Security Checklist
+
+- [ ] Token in environment variable (never hardcoded)
+- [ ] `.env` in `.gitignore`
+- [ ] pre-commit hooks with gitleaks
+- [ ] Input validation (no command injection)
+- [ ] Rate limiting for user requests
+- [ ] Webhook URL uses HTTPS
+- [ ] No sensitive data in logs
+- [ ] User data encrypted if stored
+
+---
+
 ## Project Structure
 
 ```
@@ -378,6 +532,10 @@ telegram-bot/
 │   │   └── callbacks.rs
 │   ├── state.rs        # FSM states
 │   └── db.rs           # Database
+├── tests/
+│   └── integration.rs  # Integration tests
 ├── Cargo.toml
-└── .env
+├── .env.example        # Template (committed)
+├── .env                # Real secrets (NOT committed)
+└── .gitignore
 ```

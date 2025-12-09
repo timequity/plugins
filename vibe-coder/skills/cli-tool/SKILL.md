@@ -8,6 +8,49 @@ description: |
 
 # CLI Tool Development
 
+## Project Protection Setup
+
+**MANDATORY before writing any code:**
+
+```bash
+# 1. Create .gitignore
+cat >> .gitignore << 'EOF'
+# Build
+target/
+node_modules/
+__pycache__/
+dist/
+
+# Config with secrets
+config.toml
+*.key
+credentials.json
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+EOF
+
+# 2. Setup pre-commit hooks
+cat > .pre-commit-config.yaml << 'EOF'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+EOF
+
+pre-commit install
+```
+
+---
+
 ## Stack Options
 
 | Language | Framework | Best For |
@@ -435,6 +478,131 @@ proceed = Confirm.ask("Continue?")
 
 ---
 
+## Testing
+
+### Rust (clap)
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use assert_cmd::Command;
+    use predicates::prelude::*;
+
+    #[test]
+    fn test_cli_help() {
+        Command::cargo_bin("mytool")
+            .unwrap()
+            .arg("--help")
+            .assert()
+            .success()
+            .stdout(predicate::str::contains("Usage"));
+    }
+
+    #[test]
+    fn test_cli_version() {
+        Command::cargo_bin("mytool")
+            .unwrap()
+            .arg("--version")
+            .assert()
+            .success();
+    }
+
+    #[test]
+    fn test_add_command() {
+        Command::cargo_bin("mytool")
+            .unwrap()
+            .args(["add", "test-item"])
+            .assert()
+            .success()
+            .stdout(predicate::str::contains("Added"));
+    }
+
+    #[test]
+    fn test_invalid_input_fails() {
+        Command::cargo_bin("mytool")
+            .unwrap()
+            .args(["add"])  // Missing required arg
+            .assert()
+            .failure();
+    }
+}
+```
+
+### Python (typer)
+
+```python
+from typer.testing import CliRunner
+from myapp import app
+
+runner = CliRunner()
+
+def test_help():
+    result = runner.invoke(app, ["--help"])
+    assert result.exit_code == 0
+    assert "Usage" in result.output
+
+def test_add_command():
+    result = runner.invoke(app, ["add", "test-item"])
+    assert result.exit_code == 0
+    assert "Added" in result.output
+
+def test_invalid_input():
+    result = runner.invoke(app, ["add"])  # Missing arg
+    assert result.exit_code != 0
+```
+
+### Node (commander)
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { execSync } from 'child_process';
+
+describe('CLI', () => {
+  it('shows help', () => {
+    const output = execSync('node dist/cli.js --help').toString();
+    expect(output).toContain('Usage');
+  });
+
+  it('adds item', () => {
+    const output = execSync('node dist/cli.js add test-item').toString();
+    expect(output).toContain('Added');
+  });
+});
+```
+
+---
+
+## TDD Workflow
+
+```
+1. Task[tdd-test-writer]: "Create 'add' subcommand"
+   → Writes assert_cmd test
+   → cargo test → FAILS (RED)
+
+2. Task[rust-developer]: "Implement 'add' subcommand"
+   → Implements minimal code
+   → cargo test → PASSES (GREEN)
+
+3. Repeat for each subcommand
+
+4. Task[code-reviewer]: "Review CLI implementation"
+   → Checks error messages, exit codes, edge cases
+```
+
+---
+
+## Security Checklist
+
+- [ ] No secrets in default config
+- [ ] Config file permissions checked (600 for sensitive)
+- [ ] Input sanitized before shell execution
+- [ ] No command injection in subprocesses
+- [ ] Secure temp file handling
+- [ ] Credentials stored in OS keyring (if needed)
+
+---
+
 ## Project Structure
 
 ```
@@ -447,6 +615,9 @@ mytool/
 │   │   ├── add.rs
 │   │   └── list.rs
 │   └── config.rs
+├── tests/
+│   └── cli_tests.rs  # Integration tests
 ├── Cargo.toml
+├── config.example.toml
 └── README.md
 ```
