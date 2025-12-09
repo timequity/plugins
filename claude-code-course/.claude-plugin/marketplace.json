@@ -37,7 +37,9 @@
       "skills": [
         "./skills/course-help",
         "./skills/progress-manager",
-        "./skills/language-selector"
+        "./skills/language-selector",
+        "./skills/lessons-en",
+        "./skills/lessons-ru"
       ],
       "agents": [
         "./agents/tutor.md"
