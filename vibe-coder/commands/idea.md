@@ -55,15 +55,42 @@ Save to `docs/PRD.md`
 python3 ~/.claude/skills/idea-validation/scripts/validate_prd.py --path .
 ```
 
-### Step 7: Next Steps
+### Step 7: Design Preferences (UI projects only)
+
+**If project type has UI** (Web App, Mobile, Browser Extension, Telegram with Web App):
+
+```
+question: "Насколько важен дизайн?"
+header: "Design"
+options:
+  - label: "Профессиональный"
+    description: "Уникальный стиль"
+  - label: "Функциональный"
+    description: "Чистый и понятный"
+  - label: "MVP - потом"
+    description: "Работает -> достаточно"
+```
+
+**If not MVP**, ask:
+1. Aesthetic direction (Minimalist / Bold / Soft / Dark)
+2. Theme selection (2-3 options from theme-factory)
+3. Animation level (Subtle / Moderate / Rich / None)
+
+Save to `docs/DESIGN.md`
+
+**If MVP or non-UI project** -> Skip design questions
+
+### Step 8: Next Steps
 
 ```
 PRD saved to docs/PRD.md
+{Design saved to docs/DESIGN.md}  # if UI project
 
 Summary:
 - Type: {project type}
 - Features: {count}
 - Complexity: {minimal/standard/full}
+- Design: {theme name} / MVP defaults / N/A
 
 Ready to start building?
   - /ship - Full automation

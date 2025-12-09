@@ -104,6 +104,101 @@ Save to `docs/PRD.md`
 python3 ~/.claude/skills/idea-validation/scripts/validate_prd.py --path .
 ```
 
+## Phase 1.5: Design Preferences
+
+**Applies to:** Web App, Mobile App, Browser Extension, Telegram Bot (with Web App UI)
+
+**Skip for:** REST API, GraphQL API, CLI Tool, Data Pipeline, Library
+
+### Step 1.5.1: Check if UI Project
+
+If project type has UI, proceed with design questions. Otherwise skip to Phase 2.
+
+### Step 1.5.2: Design Priority
+
+```
+question: "Насколько важен дизайн?"
+header: "Design"
+options:
+  - label: "Профессиональный"
+    description: "Уникальный стиль, впечатляет"
+  - label: "Функциональный"
+    description: "Чистый и понятный"
+  - label: "MVP - потом"
+    description: "Работает -> достаточно"
+```
+
+**If "MVP - потом"** -> Use defaults (Modern Minimalist, system fonts, no animations), skip to Phase 2.
+
+### Step 1.5.3: Aesthetic Direction
+
+```
+question: "Какой визуальный стиль?"
+header: "Style"
+options:
+  - label: "Minimalist"
+    description: "Пространство, чистые линии"
+  - label: "Bold & Modern"
+    description: "Яркие акценты, современный"
+  - label: "Soft & Friendly"
+    description: "Округлые формы, мягкие тона"
+  - label: "Dark & Professional"
+    description: "Тёмная тема, серьёзный"
+```
+
+### Step 1.5.4: Theme Selection
+
+Based on aesthetic, offer 2-3 matching themes from theme-factory:
+
+| Direction | Themes |
+|-----------|--------|
+| Minimalist | Modern Minimalist, Arctic Frost |
+| Bold & Modern | Tech Innovation, Sunset Boulevard |
+| Soft & Friendly | Desert Rose, Botanical Garden |
+| Dark & Professional | Ocean Depths, Midnight Galaxy |
+
+```
+question: "Какая цветовая схема?"
+header: "Theme"
+options:
+  - label: "{Theme 1} ({primary color})"
+  - label: "{Theme 2} ({primary color})"
+  - label: "Custom"
+    description: "Свои цвета"
+```
+
+### Step 1.5.5: Animation Level
+
+```
+question: "Сколько анимации?"
+header: "Motion"
+options:
+  - label: "Subtle (hover only)"
+  - label: "Moderate (transitions)"
+  - label: "Rich (page animations)"
+  - label: "None"
+```
+
+### Step 1.5.6: Create DESIGN.md
+
+Save design specification to `docs/DESIGN.md`:
+
+```markdown
+# Design Specification
+
+## Theme: {theme name}
+- Primary: {hex}
+- Secondary: {hex}
+- Accent: {hex}
+- Background: {hex}
+
+## Fonts
+- Headers: {font}
+- Body: {font}
+
+## Motion Level: {level}
+```
+
 ## Phase 2: Project Setup
 
 ### Step 2.1: Ask Stack
@@ -129,11 +224,13 @@ Based on stack choice:
 - Python: Run `Task[python-project-init]`
 - Node: Run `Task[node-project-init]`
 
-Agent reads PRD and creates:
+Agent reads `docs/PRD.md` + `docs/DESIGN.md` and creates:
 - Project structure
 - Dependencies
 - Health endpoint with test
-- UI templates (if fullstack)
+- UI templates with selected theme (colors as CSS variables)
+- Fonts configured in base styles
+- Motion level applied to components
 - Beads issues from PRD features
 
 ## Phase 3: TDD Implementation
