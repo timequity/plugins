@@ -1,0 +1,78 @@
+# /lesson N — Go to Specific Lesson
+
+Opens lesson by number.
+
+## Syntax
+
+```
+/course lesson 1
+/course lesson 2
+...
+/course lesson 5
+```
+
+## Algorithm
+
+### 1. Validate Number
+
+Check that N is 1-5. If not:
+```
+Lesson {N} doesn't exist. Available lessons: 1-5.
+```
+
+### 2. Load Lesson Content
+
+Lesson content is in:
+```
+plugins/claude-code-course/lessons/en/
+├── lesson-1.md
+├── lesson-2.md
+├── lesson-3.md
+├── lesson-4.md
+└── lesson-5.md
+```
+
+Read `lesson-{N}.md` and show content.
+
+### 3. Update Progress
+
+1. Set `current_lesson: N`
+2. If no entry for lesson N, create:
+   ```json
+   "N": {
+     "started_at": "ISO_DATE",
+     "theory_read": false,
+     "practice_completed": false,
+     "practice_attempts": 0
+   }
+   ```
+3. Save progress
+
+### 4. Lesson Format
+
+After showing theory:
+```
+---
+
+Theory complete! Now for practice.
+
+Type `/course practice` to start the hands-on task.
+```
+
+And update `theory_read: true`.
+
+## Lesson Structure
+
+Each lesson contains:
+1. **Title** — lesson name
+2. **Goals** — what you'll learn
+3. **Theory** — core concepts (short blocks)
+4. **Examples** — code or commands
+5. **Summary** — key points
+
+## Tone
+
+- Use "you" informally
+- Explain simply, no jargon
+- Show real examples
+- After theory — straight to practice
