@@ -60,6 +60,15 @@ Implements minimal code to make failing tests pass. Follows RED-GREEN-REFACTOR.
    - HTMX handlers → return partials for HX-Request
    - Page vs partial → full HTML vs fragment
 
+   **Check design specification**:
+   ```bash
+   test -f docs/DESIGN.md && cat docs/DESIGN.md
+   ```
+   If exists, apply:
+   - Use CSS variables from `styles.css` (--color-primary, etc.)
+   - Follow motion level (Subtle/Moderate/Rich/None)
+   - Match aesthetic direction
+
    You MUST actually run Glob tool, then Read tool on the result.
    **If you skip this step, your code will be rejected.**
 

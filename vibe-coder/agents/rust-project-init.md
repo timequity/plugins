@@ -19,14 +19,17 @@ Sets up a new Rust project with protection and dependencies. Run ONCE.
 - Project type: `api` (JSON API), `fullstack` (API + HTMX frontend), `cli`, `lib`
 - Database: `postgres`, `sqlite`, `none`
 
-## Pre-check: Read docs/PRD.md if exists
+## Pre-check: Read docs/PRD.md and docs/DESIGN.md if exist
 
 Before creating anything, check for existing requirements:
 ```bash
 test -f docs/PRD.md && cat docs/PRD.md
+test -f docs/DESIGN.md && cat docs/DESIGN.md
 ```
 
-If found: **Read docs/PRD.md** — understand project purpose and use context for setup.
+If found:
+- **Read docs/PRD.md** — understand project purpose and use context for setup
+- **Read docs/DESIGN.md** — extract theme colors, fonts, and motion level for templates
 
 ## Process
 
@@ -169,12 +172,43 @@ If found: **Read docs/PRD.md** — understand project purpose and use context fo
 9. **Create templates (fullstack only)**:
    ```
    templates/
-   ├── base.html         # Layout with HTMX script
+   ├── base.html         # Layout with HTMX script + theme CSS variables
+   ├── styles.css        # Theme colors, fonts, motion from DESIGN.md
    └── pages/
        └── index.html    # Home page with form and list
    ```
 
-   **base.html**: see frontend-htmx skill
+   **styles.css** (from docs/DESIGN.md):
+   ```css
+   :root {
+     /* Colors from DESIGN.md theme */
+     --color-primary: {primary_hex};
+     --color-secondary: {secondary_hex};
+     --color-accent: {accent_hex};
+     --color-background: {background_hex};
+     --color-text: {text_hex};
+
+     /* Fonts from DESIGN.md */
+     --font-headers: '{header_font}', system-ui, sans-serif;
+     --font-body: '{body_font}', system-ui, sans-serif;
+   }
+
+   body {
+     font-family: var(--font-body);
+     background-color: var(--color-background);
+     color: var(--color-text);
+   }
+
+   h1, h2, h3 { font-family: var(--font-headers); }
+
+   /* Motion level from DESIGN.md */
+   /* Subtle: only hover */
+   /* Moderate: transitions on all interactive elements */
+   /* Rich: page transitions, staggered animations */
+   /* None: no transitions */
+   ```
+
+   **base.html**: see frontend-htmx skill (include styles.css)
 
    **index.html** (MUST include working UI):
    ```html
