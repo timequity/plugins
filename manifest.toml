@@ -4,9 +4,9 @@
 [[packs]]
 id = "ccc"
 name = "Claude Code Course"
-description = "Master Claude Code from zero to expert. Socratic assessment places you at the right level. Progressive skills from basics to advanced workflows."
+description = "Master Claude Code from zero to expert. 5 hands-on lessons from basics to building full applications."
 price_usd = 0.0
-skills_count = 3
+skills_count = 7
 commands_count = 6
 agents_count = 1
 
