@@ -20,7 +20,6 @@
       "category": "learning",
       "tags": ["course", "learning", "tutorial", "claude-code", "beginner", "multilingual"],
       "strict": false,
-      "languages": ["en", "ru"],
       "commands": [
         "./commands/en/course.md",
         "./commands/en/lesson.md",
