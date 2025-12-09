@@ -91,13 +91,59 @@ Completed: ████████░░ 2/5 (40%)
 1. Обнови прогресс: установи `started_at` для текущего урока
 2. Перенаправь на `/course lesson N` где N = current_lesson
 
-## Сохранение прогресса
+## Автосохранение прогресса
 
-При первом запуске или начале урока:
+**ВАЖНО:** Сохраняй прогресс автоматически при каждом изменении состояния!
+
+### Функция сохранения
+
+```bash
+save_progress() {
+  mkdir -p "$HOME/.claude-course"
+  cat > "$HOME/.claude-course/progress.json" << 'PROGRESS'
+$PROGRESS_JSON
+PROGRESS
+}
+```
+
+### Когда сохранять
+
+| Событие | Что обновить |
+|---------|--------------|
+| Начало урока | `started_at`, `current_lesson` |
+| Прочитана теория | `theory_read: true` |
+| Практика успешна | `practice_completed: true`, `completed_at`, `current_lesson++` |
+| Практика неуспешна | `practice_attempts++` |
+| Курс завершён | `completed: true` |
+
+### Пример: начать урок 1
 
 ```bash
 mkdir -p "$HOME/.claude-course"
-# Сохрани JSON в файл
+cat > "$HOME/.claude-course/progress.json" << 'EOF'
+{
+  "version": "1.0.0",
+  "current_lesson": 1,
+  "lessons": {
+    "1": {
+      "started_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+      "theory_read": false,
+      "practice_completed": false,
+      "practice_attempts": 0
+    }
+  },
+  "completed": false
+}
+EOF
+```
+
+### Пример: завершить практику урока 1
+
+```bash
+# Прочитай текущий прогресс, обнови и сохрани:
+# - lessons.1.practice_completed = true
+# - lessons.1.completed_at = now
+# - current_lesson = 2
 ```
 
 ## Тон общения

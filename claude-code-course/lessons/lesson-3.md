@@ -200,3 +200,34 @@ model: haiku
 </details>
 
 Когда закончишь, скажи "готово" и я проверю результат.
+
+---
+
+## Проверка практики
+
+Когда пользователь говорит "готово", выполни проверку:
+
+```bash
+# Проверка урока 3
+AGENT_FILE=".claude/agents/file-counter.md"
+if [ -f "$AGENT_FILE" ]; then
+  # Проверяем обязательные поля frontmatter
+  if head -20 "$AGENT_FILE" | grep -q "^name:" && \
+     head -20 "$AGENT_FILE" | grep -q "^tools:" && \
+     head -20 "$AGENT_FILE" | grep -q "^model:"; then
+    echo "✓ Агент создан с правильной структурой!"
+  else
+    echo "✗ Файл есть, но отсутствует frontmatter (name/tools/model)"
+  fi
+else
+  echo "✗ Файл .claude/agents/file-counter.md не найден"
+fi
+```
+
+**При успехе:**
+- Обнови прогресс: `practice_completed: true`
+- Покажи поздравление и предложи перейти к уроку 4
+
+**При неудаче:**
+- Объясни что именно не так
+- Напомни обязательные поля: name, tools, model

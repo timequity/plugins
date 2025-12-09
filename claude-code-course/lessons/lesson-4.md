@@ -228,3 +228,33 @@ Claude: [Edit файл]
 </details>
 
 Когда закончишь, скажи "готово" и я проверю результат.
+
+---
+
+## Проверка практики
+
+Когда пользователь говорит "готово", выполни проверку:
+
+```bash
+# Проверка урока 4
+SETTINGS_FILE=".claude/settings.json"
+if [ -f "$SETTINGS_FILE" ]; then
+  # Проверяем наличие hooks секции
+  if grep -q '"hooks"' "$SETTINGS_FILE" && \
+     grep -q '"PostToolUse"' "$SETTINGS_FILE"; then
+    echo "✓ Хуки настроены!"
+  else
+    echo "✗ Файл есть, но нет секции hooks/PostToolUse"
+  fi
+else
+  echo "✗ Файл .claude/settings.json не найден"
+fi
+```
+
+**При успехе:**
+- Обнови прогресс: `practice_completed: true`
+- Покажи поздравление и предложи перейти к уроку 5
+
+**При неудаче:**
+- Объясни структуру settings.json
+- Покажи минимальный пример с hooks

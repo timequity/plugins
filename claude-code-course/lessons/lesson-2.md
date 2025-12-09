@@ -163,3 +163,33 @@ description: |
 </details>
 
 Когда закончишь, скажи "готово" и я проверю результат.
+
+---
+
+## Проверка практики
+
+Когда пользователь говорит "готово", выполни проверку:
+
+```bash
+# Проверка урока 2
+SKILL_FILE=".claude/skills/greeting/SKILL.md"
+if [ -f "$SKILL_FILE" ]; then
+  # Проверяем frontmatter
+  if head -20 "$SKILL_FILE" | grep -q "^name:" && \
+     head -20 "$SKILL_FILE" | grep -q "^description:"; then
+    echo "✓ Скилл создан с правильной структурой!"
+  else
+    echo "✗ Файл есть, но отсутствует frontmatter (name/description)"
+  fi
+else
+  echo "✗ Файл .claude/skills/greeting/SKILL.md не найден"
+fi
+```
+
+**При успехе:**
+- Обнови прогресс: `practice_completed: true`
+- Покажи поздравление и предложи перейти к уроку 3
+
+**При неудаче:**
+- Объясни что именно не так (путь? структура?)
+- Покажи пример правильного frontmatter
