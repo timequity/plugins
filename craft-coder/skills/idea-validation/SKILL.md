@@ -104,9 +104,22 @@ PRD saved to docs/PRD.md
 Next: Task[rust-project-init] (creates project + beads issues from PRD)
 ```
 
+## Validation Script
+
+Validate PRD format:
+
+```bash
+python scripts/validate_prd.py --path /project/path
+python scripts/validate_prd.py --path docs/PRD.md --json  # JSON output
+python scripts/validate_prd.py --strict  # Warnings as errors
+```
+
+Required sections: Problem, User, Core Action/Features, Success.
+
 ## Rules
 
 - **No technical questions** — user chooses nothing technical
 - **One question at a time** — don't overwhelm
 - **Save PRD.md** — always persist, never internal-only
 - **Move fast** — 4 questions max
+- **Validate PRD** — run scripts/validate_prd.py after creation
