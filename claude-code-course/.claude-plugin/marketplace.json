@@ -5,26 +5,35 @@
     "email": "plugins@timequity.dev"
   },
   "metadata": {
-    "description": "Master Claude Code from zero to expert. Socratic assessment places you at the right level.",
+    "description": "Interactive course: Master Claude Code from basics to building full applications. 5 lessons with hands-on practice.",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "claude-code-course",
       "source": "./",
-      "description": "Master Claude Code from zero to expert. Socratic assessment places you at the right level. Progressive skills from basics to advanced workflows.",
+      "description": "Interactive course: Master Claude Code from basics to building full applications. 5 lessons with hands-on practice.",
       "version": "1.0.0",
       "author": {
         "name": "timequity"
       },
-      "category": "education",
-      "tags": ["learning", "claude-code", "tutorial", "beginner", "course"],
+      "category": "learning",
+      "tags": ["course", "learning", "tutorial", "claude-code", "beginner"],
       "strict": false,
+      "commands": [
+        "./commands/course.md",
+        "./commands/lesson.md",
+        "./commands/practice.md",
+        "./commands/progress.md",
+        "./commands/list.md",
+        "./commands/reset.md"
+      ],
       "skills": [
-        "./skills/learning-path",
-        "./skills/foundations",
-        "./skills/intermediate",
-        "./skills/advanced"
+        "./skills/course-help",
+        "./skills/progress-manager"
+      ],
+      "agents": [
+        "./agents/tutor.md"
       ]
     }
   ]

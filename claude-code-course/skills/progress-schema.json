@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Claude Code Course Progress",
+  "description": "Schema for tracking user progress in ~/.claude-course/progress.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Schema version",
+      "default": "1.0.0"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When user started the course"
+    },
+    "current_lesson": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Current lesson number (1-5)"
+    },
+    "lessons": {
+      "type": "object",
+      "properties": {
+        "1": { "$ref": "#/definitions/lesson_progress" },
+        "2": { "$ref": "#/definitions/lesson_progress" },
+        "3": { "$ref": "#/definitions/lesson_progress" },
+        "4": { "$ref": "#/definitions/lesson_progress" },
+        "5": { "$ref": "#/definitions/lesson_progress" }
+      }
+    },
+    "completed": {
+      "type": "boolean",
+      "description": "Whether user completed the entire course"
+    }
+  },
+  "definitions": {
+    "lesson_progress": {
+      "type": "object",
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "theory_read": {
+          "type": "boolean",
+          "default": false
+        },
+        "practice_completed": {
+          "type": "boolean",
+          "default": false
+        },
+        "practice_attempts": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    }
+  },
+  "required": ["version", "current_lesson"]
+}

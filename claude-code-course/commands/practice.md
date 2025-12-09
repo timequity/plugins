@@ -1,43 +1,131 @@
-Give me a hands-on exercise to practice Claude Code.
+# /course practice — Практическое задание
 
-Based on my current level and recent topics, create a practical exercise:
+Запускает практику для текущего урока.
 
-## Exercise Format
-
-1. **Task**: Clear, specific goal (1-2 sentences)
-
-2. **Steps**: What to do (numbered)
-
-3. **Verify**: How to check it worked
-
-4. **Hint**: Available if I get stuck (don't show immediately)
-
-## Example (Foundations level):
+## Синтаксис
 
 ```
-TASK: Create your first CLAUDE.md file
-
-STEPS:
-1. Create a file called CLAUDE.md in your project root
-2. Add a ## Project section with your project name
-3. Add a ## Commands section with one command you use often
-
-VERIFY:
-- Ask me "what do you know about this project?"
-- I should mention details from your CLAUDE.md
-
-HINT (if stuck):
-Start with just: # CLAUDE.md\n\n## Project\nMy awesome app
+/course practice
 ```
 
-## Levels
+## Алгоритм
 
-- **Foundations**: File operations, basic commands, CLAUDE.md
-- **Intermediate**: Custom commands, MCP setup, hooks
-- **Advanced**: Custom skills, agents, complex workflows
+### 1. Загрузить прогресс
 
-Match exercise difficulty to my demonstrated level.
+Определи `current_lesson` из `~/.claude-course/progress.json`.
 
-After I complete it, validate my work and offer the next exercise or topic.
+### 2. Проверить готовность
 
-$ARGUMENTS
+Если `theory_read: false` для текущего урока:
+```
+Сначала изучи теорию урока {N}.
+
+Введи `/course lesson {N}` чтобы прочитать материал.
+```
+
+### 3. Показать задание
+
+Практические задания находятся в файлах уроков (секция ## Практика).
+
+### 4. Формат задания
+
+```
+# Практика: Урок {N}
+
+## Задание
+
+{Чёткое описание что нужно сделать}
+
+## Шаги
+
+1. {Шаг 1}
+2. {Шаг 2}
+3. {Шаг 3}
+
+## Проверка
+
+Когда закончишь, скажи "готово" и я проверю результат.
+
+## Подсказка
+
+<details>
+<summary>Нужна помощь?</summary>
+
+{Подсказка без полного решения}
+
+</details>
+```
+
+### 5. Обновить счётчик попыток
+
+При каждом запуске практики:
+```json
+"N": {
+  "practice_attempts": practice_attempts + 1
+}
+```
+
+### 6. Проверка выполнения
+
+Когда пользователь говорит "готово" или "проверь":
+1. Проверь выполнение (зависит от задания)
+2. Если успешно:
+   - Обнови `practice_completed: true`
+   - Обнови `completed_at: ISO_DATE`
+   - Обнови `current_lesson: N + 1`
+   - Покажи поздравление
+3. Если неуспешно:
+   - Объясни что не так
+   - Предложи попробовать ещё раз
+
+### 7. Успешное завершение
+
+```
+Отлично! Практика урока {N} завершена.
+
+Ты научился:
+- {Навык 1}
+- {Навык 2}
+
+Прогресс: ████████░░░░░░░░░░░░ {X}/5
+
+Готов к следующему уроку? Введи `/course lesson {N+1}`
+```
+
+### 8. Завершение последнего урока
+
+Если N = 5 и практика успешна:
+```
+Поздравляю! Ты прошёл весь курс Claude Code!
+
+████████████████████ 100%
+
+Теперь ты знаешь:
+- Основы CLI и команд
+- Как создавать скиллы
+- Как работать с агентами
+- Как настраивать хуки
+- Как строить приложения
+
+Что дальше?
+- Создай свой первый плагин для marketplace
+- Поделись опытом с сообществом
+```
+
+И обнови `completed: true` в прогрессе.
+
+## Практики по урокам
+
+| Урок | Тема практики |
+|------|---------------|
+| 1 | Создание CLAUDE.md |
+| 2 | Написание простого скилла |
+| 3 | Создание кастомного агента |
+| 4 | Настройка pre-commit хука |
+| 5 | Мини-приложение с нуля |
+
+## Тон
+
+- Поддерживающий: "Попробуй ещё раз, ты на верном пути"
+- Конкретный: чёткие шаги без воды
+- Праздничный при успехе (но без перебора с эмодзи)
