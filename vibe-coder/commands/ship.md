@@ -100,9 +100,17 @@ Save to `docs/PRD.md`
 
 ### Step 1.7: Validate PRD
 
-```bash
-python3 ~/.claude/skills/idea-validation/scripts/validate_prd.py --path .
-```
+1. Find validation script:
+   ```
+   Glob: **/skills/idea-validation/scripts/validate_prd.py
+   ```
+
+2. Run with found path:
+   ```bash
+   python3 {found_script_path} --path .
+   ```
+
+If script not found, skip validation (non-blocking).
 
 ## Phase 1.5: Design Preferences
 
@@ -233,6 +241,53 @@ Agent reads `docs/PRD.md` + `docs/DESIGN.md` and creates:
 - Motion level applied to components
 - Beads issues from PRD features
 
+## Phase 2.5: Project Validation (MANDATORY)
+
+After project initialization, verify everything works before TDD:
+
+### Step 2.5.1: Start App
+```bash
+cargo run &
+APP_PID=$!
+sleep 3
+```
+
+### Step 2.5.2: Verify Endpoints
+```bash
+# Health endpoint
+curl -sf http://127.0.0.1:3000/health || echo "FAIL: /health"
+
+# Static files (fullstack only)
+curl -sf http://127.0.0.1:3000/static/styles.css > /dev/null || echo "FAIL: static files"
+
+# Index page returns HTML
+curl -sf http://127.0.0.1:3000/ | grep -q "<html" || echo "FAIL: index not HTML"
+
+# All hx-* endpoints exist (parse from templates)
+for endpoint in $(grep -rh "hx-get\|hx-post" templates/ 2>/dev/null | grep -oE '"[^"]*"' | tr -d '"' | sort -u); do
+  curl -sf "http://127.0.0.1:3000$endpoint" > /dev/null || echo "WARN: $endpoint may not exist"
+done
+```
+
+### Step 2.5.3: Verify Beads
+```bash
+bd doctor
+bd ready  # должен показать первую задачу
+```
+
+### Step 2.5.4: Stop App
+```bash
+kill $APP_PID 2>/dev/null
+```
+
+### Step 2.5.5: Handle Failures
+
+**If ANY check fails:**
+1. Run `Task[debugger]` with symptom description
+2. Apply suggested fixes
+3. Re-run validation
+4. Only proceed to Phase 3 when all checks pass
+
 ## Phase 3: TDD Implementation
 
 Loop until all features done:
@@ -252,16 +307,24 @@ Loop until all features done:
 ## Phase 4: Verification Gate
 
 1. **Security scan**:
+   ```
+   Glob: **/skills/security-check/scripts/security_scan.py
+   ```
    ```bash
-   python3 ~/.claude/skills/security-check/scripts/security_scan.py --path . --threshold medium
+   python3 {found_script_path} --path . --threshold medium
    ```
 
 2. **Quality gate**:
+   ```
+   Glob: **/skills/verification-gate/scripts/verify.py
+   ```
    ```bash
-   python3 ~/.claude/skills/verification-gate/scripts/verify.py --path .
+   python3 {found_script_path} --path .
    ```
 
-3. **If issues found**: fix and re-run
+3. **If scripts not found**: Skip (non-blocking), but warn
+
+4. **If issues found**: Run `Task[debugger]` to fix, then re-run
 
 ## Phase 5: Ship It
 

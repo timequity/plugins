@@ -51,9 +51,17 @@ Save to `docs/PRD.md`
 
 ### Step 6: Validate
 
-```bash
-python3 ~/.claude/skills/idea-validation/scripts/validate_prd.py --path .
-```
+1. Find validation script:
+   ```
+   Glob: **/skills/idea-validation/scripts/validate_prd.py
+   ```
+
+2. Run with found path:
+   ```bash
+   python3 {found_script_path} --path .
+   ```
+
+If script not found, skip validation (non-blocking).
 
 ### Step 7: Design Preferences (UI projects only)
 

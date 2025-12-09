@@ -276,6 +276,58 @@ If found:
     bd ready  # Show what's ready to work on
     ```
 
+## Fullstack Checklist (MANDATORY for type=fullstack)
+
+Before reporting "Ready", verify ALL items:
+
+- [ ] `tower-http` with feature `fs` in Cargo.toml
+- [ ] `use tower_http::services::ServeDir;` in lib.rs
+- [ ] `.nest_service("/static", ServeDir::new("static"))` in Router
+- [ ] `static/styles.css` exists with CSS variables from DESIGN.md
+- [ ] `<link rel="stylesheet" href="/static/styles.css">` in base.html
+- [ ] ALL `hx-get`/`hx-post`/`hx-delete` endpoints have handlers
+- [ ] Animations use `animation-fill-mode: both` (not just forwards with opacity:0)
+
+**Parse templates for endpoints:**
+```bash
+grep -rh "hx-get\|hx-post\|hx-delete" templates/ | \
+  grep -oE '(hx-get|hx-post|hx-delete)="[^"]*"' | \
+  sed 's/.*="\([^"]*\)".*/\1/' | sort -u
+```
+
+Each endpoint MUST have a route in `create_app()`.
+
+## Post-Init Validation (MANDATORY)
+
+After creating project, MUST verify it works:
+
+1. **Start app:**
+   ```bash
+   cargo build --release 2>&1 | tail -5
+   cargo run &
+   APP_PID=$!
+   sleep 3
+   ```
+
+2. **Check endpoints:**
+   ```bash
+   # Health must work
+   curl -sf http://127.0.0.1:3000/health || echo "FAIL: /health"
+
+   # Static files must be served (fullstack only)
+   curl -sf http://127.0.0.1:3000/static/styles.css > /dev/null || echo "FAIL: /static/styles.css"
+
+   # Index page must return HTML
+   curl -sf http://127.0.0.1:3000/ | grep -q "<html" || echo "FAIL: / not HTML"
+   ```
+
+3. **Stop app:**
+   ```bash
+   kill $APP_PID 2>/dev/null
+   ```
+
+4. **If ANY check fails:** Fix before reporting Ready.
+
 ## Output Format (keep brief!)
 
 ```
