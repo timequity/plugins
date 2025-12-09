@@ -1,52 +1,142 @@
 ---
 name: brainstorming
 description: |
-  Refine ideas into designs through Socratic dialogue.
-  Use when: user has a rough idea, needs to clarify requirements, explore approaches.
+  Refine ideas into detailed designs through Socratic dialogue.
+  Use when: user has rough idea, needs to clarify requirements, explore approaches.
   Triggers: "brainstorm", "discuss idea", "I'm thinking about", "what if",
-  "help me think through", "explore options".
+  "help me think through", "explore options", "/brainstorm".
 ---
 
 # Brainstorming Ideas Into Designs
 
 Turn rough ideas into fully formed designs through natural collaborative dialogue.
+Integrated with idea-validation — brainstorming is an optional deep-dive before PRD creation.
 
-## Process
+## When to Use
 
-### 1. Understand the Idea
+| Trigger | Action |
+|---------|--------|
+| `/brainstorm` command | Full brainstorm session |
+| Short idea (<10 words) | Suggest brainstorm in /ship |
+| Complex project type | Suggest brainstorm in /ship |
+| User asks "what if" / "help me think" | Start brainstorm |
+| User has detailed description | Skip to idea-validation |
 
-- Check current project context first (files, docs, recent commits)
-- Ask questions **one at a time**
-- Prefer multiple choice when possible
-- Focus on: purpose, constraints, success criteria
+## Brainstorm Flow
 
-### 2. Explore Approaches
+### Phase 1: Understand the Core
 
-- Propose 2-3 different approaches with trade-offs
-- Lead with your recommendation and explain why
-- Present options conversationally
+1. **Clarify the idea** — ask what they're trying to build
+2. **Identify type** — Web App, Telegram Bot, API, CLI, etc.
+3. **Find the problem** — what pain point does it solve?
+4. **Define success** — how will we know it works?
 
-### 3. Present the Design
+**Questions to ask (one at a time):**
+```
+"Расскажи подробнее — что именно это должно делать?"
+"Кто будет этим пользоваться? В каком контексте?"
+"Какую проблему это решает?"
+"Как понять что получилось?"
+```
 
-Once you understand what you're building:
-- Break into sections of 200-300 words
-- Ask after each section: "Does this look right so far?"
-- Cover: architecture, components, data flow, error handling
-- Be ready to go back and clarify
+### Phase 2: Explore Approaches (Type-Specific)
+
+Based on project type, explore key decisions:
+
+#### For Telegram Bot:
+- Commands vs conversational?
+- Need database?
+- External API integrations?
+- Webhooks vs polling?
+
+#### For Web App:
+- Authentication needed?
+- Realtime features?
+- Single page or multi-page?
+- Admin panel?
+
+#### For API:
+- REST vs GraphQL?
+- Public or internal?
+- Auth method?
+- Rate limiting?
+
+#### For CLI:
+- Interactive or one-shot?
+- Config file support?
+- Output format (text/JSON/table)?
+
+### Phase 3: Define Boundaries
+
+Ask about constraints and non-goals:
+
+```
+"Что точно НЕ должно быть в MVP?"
+"Есть ограничения? Бесплатные сервисы only? Дедлайн?"
+"Какой масштаб ожидаешь — 10 пользователей или 10000?"
+```
+
+### Phase 4: Present Design Summary
+
+Once you understand:
+
+```markdown
+## Резюме
+
+**Проект:** {name}
+**Тип:** {type}
+**Проблема:** {one sentence}
+**Пользователь:** {who}
+
+**MVP Features:**
+1. {Feature 1}
+2. {Feature 2}
+3. {Feature 3}
+
+**Не делаем:**
+- {Non-goal 1}
+- {Non-goal 2}
+
+**Ограничения:**
+- {Constraint 1}
+
+Всё верно? Готов создать PRD?
+```
+
+## Integration with idea-validation
+
+After brainstorm completes:
+
+1. **Pass collected info** to idea-validation skill
+2. **Skip redundant questions** — don't re-ask what brainstorm covered
+3. **Generate appropriate PRD** — Full PRD after full brainstorm
+
+```
+Brainstorm Complete → idea-validation → PRD.md (Full)
+```
 
 ## Key Principles
 
 | Principle | Why |
 |-----------|-----|
 | One question at a time | Don't overwhelm |
-| Multiple choice preferred | Easier to answer |
+| Multiple choice when possible | Easier to answer |
 | YAGNI ruthlessly | Remove unnecessary features |
-| Explore alternatives | Always propose 2-3 approaches |
-| Incremental validation | Present in sections, validate each |
+| Explore alternatives | Propose 2-3 approaches |
+| Validate incrementally | Present sections, validate each |
+| No technical jargon | User chooses nothing technical |
 
-## After the Design
+## Standalone Usage
 
-**If continuing to implementation:**
-1. "Ready to build?"
-2. Use stack-selector to choose template
-3. Start /mvp:build pipeline
+If user runs `/brainstorm` without `/ship`:
+
+```
+User: /brainstorm I want to make a bot that tracks expenses
+
+Claude: [Starts brainstorm]
+"Интересная идея! Давай уточним детали.
+Это для Telegram, Discord, или другой платформы?"
+
+[After brainstorm]
+Claude: "Готово! Хочешь сразу начать строить? Могу запустить /ship"
+```
