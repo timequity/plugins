@@ -1,67 +1,55 @@
 ---
-name: claude-code-mastery
+name: claude-code-course
 description: |
-  Master Claude Code from zero to expert through Socratic learning.
-  Use when: user wants to learn Claude Code, asks "how do I...", or is confused about features.
-  Triggers: "learn Claude Code", "teach me", "how does this work", "I'm new to Claude Code",
-  "научи меня", "как пользоваться", "я новичок".
+  Learn Claude Code in 5 hands-on lessons. From basics to building applications.
+  Use when: user wants to learn Claude Code, asks "how do I...", or is new.
+  Triggers: "learn", "teach me", "how does this work", "I'm new", "course".
 ---
 
-# Claude Code Mastery
+# Claude Code Course
 
-Learn Claude Code through guided, progressive skill building.
+Master Claude Code from zero to expert in 5 hands-on lessons.
 
-## Philosophy
+## What You'll Learn
 
-```
-Not this:                      This:
-┌─────────────────┐           ┌─────────────────┐
-│ Read 50 pages   │           │ "What do you    │
-│ of docs         │     →     │  want to build?"│
-│ Then try stuff  │           │                 │
-└─────────────────┘           │ Let's learn by  │
-                              │ doing that.     │
-                              └─────────────────┘
-```
+| Lesson | Topic | What You'll Do |
+|--------|-------|----------------|
+| 1 | Getting Started | First commands, file operations |
+| 2 | Skills | Create your first skill |
+| 3 | Commands & Hooks | Customize with slash commands |
+| 4 | Agents | Build autonomous agents |
+| 5 | Full Project | Build a complete application |
 
 ## How It Works
 
-### 1. Assessment (Socratic)
-`learning-path` skill asks questions to determine:
-- Current experience level
-- What you want to accomplish
-- Learning style preference
+```
+/ccc:course    Start or continue the course
+/ccc:lesson N  Jump to specific lesson (1-5)
+/ccc:practice  Do hands-on exercises
+/ccc:progress  Check your progress
+```
 
-### 2. Level Placement
-Based on assessment, routes to appropriate track:
-
-| Level | For | Focus |
-|-------|-----|-------|
-| Foundations | New to Claude Code | Basic commands, file operations, chat |
-| Intermediate | Know basics | Tools, MCP, hooks, customization |
-| Advanced | Power users | Custom agents, skills, complex workflows |
-
-### 3. Progressive Learning
-Each level builds on previous:
-- Hands-on exercises
-- Real project examples
-- Reference cards for quick lookup
-
-## Entry Point
-
-Start with `/mastery:assess` or just ask "teach me Claude Code".
-
-The learning-path skill will guide you from there.
-
-## Skills Structure
+## Course Philosophy
 
 ```
-skills/
-├── learning-path/     # Assessment + routing
-├── foundations/       # Level 1: Basics
-│   └── references/    # Quick reference cards
-├── intermediate/      # Level 2: Customization
-│   └── references/
-└── advanced/          # Level 3: Power user
-    └── references/
+Not this:                      This:
++-----------------+           +-----------------+
+| Read 50 pages   |           | "Let's build    |
+| of docs         |     ->    |  something"     |
+| Then try stuff  |           |                 |
++-----------------+           | Learn by doing  |
+                              +-----------------+
 ```
+
+## Features
+
+- **5 Lessons** - Progressive, hands-on learning
+- **Practice Tasks** - Real exercises in each lesson
+- **Progress Tracking** - Pick up where you left off
+- **Tutor Agent** - AI instructor guides you
+
+## Quick Start
+
+Just say "teach me Claude Code" or run `/ccc:course`.
+
+The tutor will guide you from there.

@@ -6,15 +6,24 @@ id = "ccc"
 name = "Claude Code Course"
 description = "Master Claude Code from zero to expert. Socratic assessment places you at the right level. Progressive skills from basics to advanced workflows."
 price_usd = 0.0
+skills_count = 3
+commands_count = 6
+agents_count = 1
 
 [[packs]]
 id = "craft-coder"
 name = "Craft Coder"
 description = "Master your craft: backend, frontend, mobile, data, DevOps, debugging. 50+ skills for serious developers."
 price_usd = 5.0
+skills_count = 51
+commands_count = 2
+agents_count = 3
 
 [[packs]]
 id = "vibe-coder"
 name = "Vibe Coder"
 description = "Describe your idea, get a deployed product. All Craft Coder skills + brainstorm, validation, marketing. Vibe coding at its finest."
 price_usd = 15.0
+skills_count = 63
+commands_count = 7
+agents_count = 4
