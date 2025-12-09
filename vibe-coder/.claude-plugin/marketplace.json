@@ -91,7 +91,8 @@
         "./commands/build.md",
         "./commands/add.md",
         "./commands/preview.md",
-        "./commands/deploy.md"
+        "./commands/deploy.md",
+        "./commands/ship.md"
       ],
       "agents": [
         "./agents/vibe-coder.md",
