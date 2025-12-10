@@ -14,11 +14,11 @@ Interactive course to master Claude Code in 5 hands-on lessons.
 
 | # | Lesson | Duration | Topics |
 |---|--------|----------|--------|
-| 1 | Основы Claude Code | 15 min | CLI, commands, prompting |
-| 2 | Твой первый скилл | 20 min | SKILL.md, triggers, structure |
-| 3 | Агенты-помощники | 25 min | Agents, Task tool, automation |
-| 4 | Хуки и автоматизация | 20 min | Hooks, pre-commit, workflows |
-| 5 | Собираем приложение | 30 min | Full project from scratch |
+| 1 | Claude Code Basics | 15 min | CLI, commands, prompting |
+| 2 | Your First Skill | 20 min | SKILL.md, triggers, structure |
+| 3 | Agent Helpers | 25 min | Agents, Task tool, automation |
+| 4 | Hooks and Automation | 20 min | Hooks, pre-commit, workflows |
+| 5 | Building an Application | 30 min | Full project from scratch |
 
 ## Commands
 

@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create plugin ZIP
+        run: |
+          zip -r vibe-coder.zip . \
+            -x "*.git*" \
+            -x ".github/*" \
+            -x "README.md" \
+            -x "LICENSE"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: vibe-coder.zip
+          generate_release_notes: true

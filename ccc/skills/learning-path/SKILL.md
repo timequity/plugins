@@ -3,8 +3,7 @@ name: learning-path
 description: |
   Assess Claude Code knowledge and route to appropriate learning level.
   Use when: user wants to learn Claude Code, asks for guidance, or says "teach me".
-  Triggers: "learn Claude Code", "teach me", "I'm new", "where do I start",
-  "научи", "с чего начать", "я новичок".
+  Triggers: "learn Claude Code", "teach me", "I'm new", "where do I start", "beginner".
 ---
 
 # Learning Path Assessment
